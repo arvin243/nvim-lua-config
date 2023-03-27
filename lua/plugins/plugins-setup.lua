@@ -22,11 +22,12 @@ vim.cmd([[
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use 'folke/tokyonight.nvim' -- 主题
+  use 'srcery-colors/srcery-vim'
+  use 'morhetz/gruvbox'
   use {
-    'nvim-tree/nvim-web-devicons',
-    'nvim-tree/nvim-tree.lua',  -- 文档树
-    'nvim-lualine/lualine.nvim',  -- 状态栏
+    'nvim-tree/nvim-tree.lua',  -- explorer
+    'nvim-lualine/lualine.nvim',  -- status bar
+    requires = { 'nvim-tree/nvim-web-devicons', }
   }
   use "christoomey/vim-tmux-navigator" -- 用ctl-hjkl来定位窗口
   use "nvim-treesitter/nvim-treesitter" -- 语法高亮
@@ -36,7 +37,7 @@ return require('packer').startup(function(use)
     "williamboman/mason-lspconfig.nvim",  -- 这个相当于mason.nvim和lspconfig的桥梁
     "neovim/nvim-lspconfig"
   }
-    -- 自动补全
+    -- auto complete
   use "hrsh7th/nvim-cmp"
   use "hrsh7th/cmp-nvim-lsp"
   use "L3MON4D3/LuaSnip" -- snippets引擎，不装这个自动补全会出问题
@@ -54,6 +55,8 @@ return require('packer').startup(function(use)
     'nvim-telescope/telescope.nvim', tag = '0.1.1',  -- 文件检索
     requires = { {'nvim-lua/plenary.nvim'} }
   }
+
+  use { "github/copilot.vim", branch = 'release' }
 
   if packer_bootstrap then
     require('packer').sync()
