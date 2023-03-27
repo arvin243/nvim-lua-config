@@ -3,7 +3,7 @@ require('plugins/plugins');
 require('core');
 require('keymaps');
 
-require('appearance');
+require('decoration');
 require('editing');
 require('nevigation');
 

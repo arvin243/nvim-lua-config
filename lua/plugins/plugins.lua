@@ -22,6 +22,7 @@ vim.cmd([[
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  use 'nvim-lua/plenary.nvim'
 
   -- appearance
   use {
@@ -35,30 +36,38 @@ return require('packer').startup(function(use)
 
   -- editing
   use {
-    'bronson/vim-trailing-whitespace',
-    'tpope/vim-abolish',
-    'tpope/vim-surround',
     'tpope/vim-repeat',
-    'tpope/vim-unimpaired',
-    'AndrewRadev/splitjoin.vim',
-    'jiangmiao/auto-pairs',
-    -- TODO: wildfire
-
-    -- narrow region
-    'andrewradev/inline_edit.vim',
-
+    'andrewradev/inline_edit.vim', -- narrow region
     -- auto increment, vis & visincr
     'vim-scripts/vis',
     -- :B, :S
     'vim-scripts/VisIncr',
     -- :I, :I -1, :II, etc
+    'gcmt/wildfire.vim',
+    'jiangmiao/auto-pairs',
 
-    "numToStr/Comment.nvim",
-    "lewis6991/gitsigns.nvim",
-
-    'godlygeek/tabular',
+    'AndrewRadev/splitjoin.vim',
     'vim-scripts/swapcol.vim',
+
+    -- conversion
+    'tpope/vim-abolish',
+    'tpope/vim-surround',
+    "numToStr/Comment.nvim",
+    -- 'scrooloose/nerdcommenter',
+
+    -- format
+    'nvie/vim-rst-tables',
+    'dhruvasagar/vim-table-mode',
+    'godlygeek/tabular',
+
+    -- information
+    "lewis6991/gitsigns.nvim",
+    'tpope/vim-fugitive',
+    'RRethy/vim-illuminate',
+    'bronson/vim-trailing-whitespace',
+    'tversteeg/registers.nvim', branch = 'main',
   }
+
 
   -- syntax & autocomplete
   use {
@@ -78,15 +87,23 @@ return require('packer').startup(function(use)
     "hrsh7th/cmp-path", -- 文件路径
 
     "github/copilot.vim", branch = 'release',
+
+    -- playground
+    'nvim-treesitter/playground',
   }
 
   -- nevigation
   use {
     'nvim-tree/nvim-tree.lua',  -- explorer
     "christoomey/vim-tmux-navigator",
-    'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope.nvim', tag = '0.1.1',
   }
+
+  -- language
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
 
   if packer_bootstrap then
     require('packer').sync()

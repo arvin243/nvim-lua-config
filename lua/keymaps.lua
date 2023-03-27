@@ -58,3 +58,5 @@ keymap.set("n", "<leader>bb", telescope.buffers, {})
 -- nnoremap t- :tabmove -<CR>
 
 keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>")
+
+keymap.set("n", "<leader>tm", ":TableModeToggle<cr>")
