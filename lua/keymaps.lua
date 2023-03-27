@@ -35,6 +35,8 @@ keymap.set("i", "<c-k>", "<esc>lC")
 keymap.set("n", "<c-e>", "2<c-e>")
 keymap.set("n", "<c-y>", "2<c-y>")
 
+keymap.set("v", "<leader>nr", ":InlineEdit<cr>")
+
 -- search
 local telescope = require('telescope.builtin')
 keymap.set("n", "<leader>fg", telescope.live_grep, {})
@@ -54,6 +56,5 @@ keymap.set("n", "<leader>bb", telescope.buffers, {})
 -- " Move the tabs with tn and ti
 -- nnoremap t+ :tabmove +<CR>
 -- nnoremap t- :tabmove -<CR>
-
 
 keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>")
