@@ -69,6 +69,7 @@ opt.shiftwidth  = 4;
 opt.softtabstop = 4;
 opt.expandtab   = true;
 opt.smartindent = true;
+vim.cmd [[autocmd FileType lua,jsom,yaml setlocal ts=2 sts=2 sw=2]]
 
 -- appearance
 opt.number         = true;
