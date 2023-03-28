@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-  -- 添加不同语言
+  -- add languages
   ensure_installed = {
     "vim", "help", "bash", "query",
     "c",

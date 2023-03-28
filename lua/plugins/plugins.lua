@@ -77,14 +77,14 @@ return require('packer').startup(function(use)
 
     -- lsp
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",  -- 这个相当于mason.nvim和lspconfig的桥梁
+    "williamboman/mason-lspconfig.nvim",  -- a bridge between mason.nvim and lspconfig
     "neovim/nvim-lspconfig",
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
-    "L3MON4D3/LuaSnip", -- snippets引擎，不装这个自动补全会出问题
+    "L3MON4D3/LuaSnip", -- snippets engine, otherwise auto-completion will fail
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
-    "hrsh7th/cmp-path", -- 文件路径
+    "hrsh7th/cmp-path", -- file path
 
     "github/copilot.vim", branch = 'release',
 
