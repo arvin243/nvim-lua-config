@@ -6,6 +6,7 @@ require('keymaps');
 require('decoration');
 require('editing');
 require('nevigation');
+require('custom_function')
 
 require('plugins/treesitter');
 require('plugins/lsp');

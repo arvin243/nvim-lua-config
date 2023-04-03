@@ -57,6 +57,10 @@ keymap.set("n", "<leader>bb", telescope.buffers, {})
 -- nnoremap t+ :tabmove +<CR>
 -- nnoremap t- :tabmove -<CR>
 
-keymap.set("n", "<leader>ee", ":NvimTreeToggle<CR>")
-
+-- toggle
+keymap.set("n", "<leader>ee", ":NvimTreeToggle<cr>")
 keymap.set("n", "<leader>tm", ":TableModeToggle<cr>")
+keymap.set("n", "<leader>ll", ":IlluminateToggle<cr>")
+
+-- run vim run
+keymap.set("n", "<leader>rr", ":call RunVimRun()<cr>")
