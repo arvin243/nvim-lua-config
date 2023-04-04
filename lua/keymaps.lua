@@ -1,6 +1,6 @@
 vim.g.mapleader = ","
-
 local keymap = vim.keymap
+local bufopts = { silent = true, noremap = true }
 
 keymap.set("n", "<esc>", ":nohl<CR>")
 keymap.set("n", "Q", "<nop>")
@@ -39,9 +39,18 @@ keymap.set("v", "<leader>nr", ":InlineEdit<cr>")
 
 -- search
 local telescope = require('telescope.builtin')
+-- local pickers = require('telescope.pickers')
 keymap.set("n", "<leader>fg", telescope.live_grep, {})
 keymap.set("n", "<leader>sf", telescope.live_grep, {})
 keymap.set("n", "<leader>bb", telescope.buffers, {})
+keymap.set('n', '<leader>ff', telescope.find_files, {})
+keymap.set('n', '<leader>fb', telescope.buffers, {})
+keymap.set('n', '<leader>fh', telescope.help_tags, {})
+-- keymap.set("n", "gr", telescope.lsp_references, {})
+-- keymap.set('n', 'gr', telescope.lsp_references, { noremap = true, silent = true })
+-- keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>')
+keymap.set("n", "gr", telescope.lsp_references, {})
+keymap.set("n", "gb", telescope.git_branches, {})
 
 -- nnoremap <leader>wp :set wrap<cr>
 -- " customize placeholder _TODO_

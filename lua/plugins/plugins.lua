@@ -79,14 +79,20 @@ return require('packer').startup(function(use)
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",  -- a bridge between mason.nvim and lspconfig
     "neovim/nvim-lspconfig",
-    "hrsh7th/nvim-cmp",
-    "hrsh7th/cmp-nvim-lsp",
+
+    { "hrsh7th/nvim-cmp",
+      requires = {
+        { "hrsh7th/cmp-nvim-lsp" },
+        { "hrsh7th/cmp-vsnip" },
+        { "hrsh7th/vim-vsnip" },
+      },
+    },
     "L3MON4D3/LuaSnip", -- snippets engine, otherwise auto-completion will fail
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets",
     "hrsh7th/cmp-path", -- file path
 
-    "github/copilot.vim", branch = 'release',
+    { "github/copilot.vim", branch = 'release', },
 
     -- playground
     'nvim-treesitter/playground',
@@ -96,13 +102,23 @@ return require('packer').startup(function(use)
   use {
     'nvim-tree/nvim-tree.lua',  -- explorer
     "christoomey/vim-tmux-navigator",
-    'nvim-telescope/telescope.nvim', tag = '0.1.1',
+    { 'nvim-telescope/telescope.nvim', branch = 'master',
+      dependencies = {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+        config = function() require("telescope").load_extension("fzf") end,
+      }},
   }
 
   -- language
   use({
-    "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end,
+    { "iamcco/markdown-preview.nvim",
+      run = function() vim.fn["mkdp#util#install"]() end },
+    { "scalameta/nvim-metals",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "mfussenegger/nvim-dap",
+      }},
   })
 
   if packer_bootstrap then
