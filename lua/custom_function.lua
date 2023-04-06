@@ -4,7 +4,7 @@ vim.api.nvim_exec([[
     :set ft=markdown
     :v/SPPC/d
     :%s/\(SPPC-\d\{5\}\)\s*\nSPPC-\d\{5\}\s*/[[\1](https:\/\/jira.shopee.io\/browse\/\1)] /
-    :%norm A  
+    :%norm A
   endfunc
 ]], true)
 
@@ -14,7 +14,10 @@ func! RunVimRun()
     if &filetype == 'sh'
         :!time bash %
     elseif &filetype == 'go'
-        :GoRun
+        " :GoRun
+        set splitbelow
+        :sp
+        :term go run %
     elseif &filetype == 'python'
         set splitbelow
         :sp
