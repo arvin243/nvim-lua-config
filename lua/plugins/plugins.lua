@@ -1,9 +1,9 @@
 -- auto install packer
 local ensure_packer = function()
   local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
   if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
     vim.cmd [[packadd packer.nvim]]
     return true
   end
@@ -77,10 +77,11 @@ return require('packer').startup(function(use)
 
     -- lsp
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",  -- a bridge between mason.nvim and lspconfig
+    "williamboman/mason-lspconfig.nvim", -- a bridge between mason.nvim and lspconfig
     "neovim/nvim-lspconfig",
 
-    { "hrsh7th/nvim-cmp",
+    {
+      "hrsh7th/nvim-cmp",
       requires = {
         { "hrsh7th/cmp-nvim-lsp" },
         { "hrsh7th/cmp-vsnip" },
@@ -100,25 +101,40 @@ return require('packer').startup(function(use)
 
   -- nevigation
   use {
-    'nvim-tree/nvim-tree.lua',  -- explorer
+    -- explorer
+    {
+      'nvim-tree/nvim-tree.lua',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      config = function()
+        vim.cmd([[doautocmd NvimTree BufEnter *]])
+      end
+    },
+
     "christoomey/vim-tmux-navigator",
-    { 'nvim-telescope/telescope.nvim', branch = 'master',
+    {
+      'nvim-telescope/telescope.nvim',
+      branch = 'master',
       dependencies = {
         "nvim-telescope/telescope-fzf-native.nvim",
         build = "make",
         config = function() require("telescope").load_extension("fzf") end,
-      }},
+      }
+    },
   }
 
   -- language
   use({
-    { "iamcco/markdown-preview.nvim",
-      run = function() vim.fn["mkdp#util#install"]() end },
-    { "scalameta/nvim-metals",
+    {
+      "iamcco/markdown-preview.nvim",
+      run = function() vim.fn["mkdp#util#install"]() end
+    },
+    {
+      "scalameta/nvim-metals",
       requires = {
         "nvim-lua/plenary.nvim",
         "mfussenegger/nvim-dap",
-      }},
+      }
+    },
   })
 
   if packer_bootstrap then

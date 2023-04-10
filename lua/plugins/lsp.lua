@@ -7,21 +7,21 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 
 require("mason").setup({
   ui = {
-      icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗"
-      }
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
+    }
   }
 })
 
 -- refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 require("mason-lspconfig").setup({
   ensure_installed = {
-    "gopls", -- golang
-    "lua_ls", -- lua
-    "marksman", -- markdown
-    "pyright", -- python
+    "gopls",         -- golang
+    "lua_ls",        -- lua
+    "marksman",      -- markdown
+    "pyright",       -- python
     "rust_analyzer", -- rust
   },
 })
@@ -44,11 +44,10 @@ require('lspconfig').gopls.setup({
   },
 })
 
-require'lspconfig'.lua_ls.setup {
+require 'lspconfig'.lua_ls.setup {
   capabilities = capabilities,
 }
 
-require'lspconfig'.marksman.setup{}
-require'lspconfig'.pyright.setup{}
-require'lspconfig'.rust_analyzer.setup{}
-
+require 'lspconfig'.marksman.setup {}
+require 'lspconfig'.pyright.setup {}
+require 'lspconfig'.rust_analyzer.setup {}

@@ -8,5 +8,6 @@ require("nvim-tree").setup({
   diagnostics = { enable = false, },
   actions = {
     open_file = { quit_on_open = true, }
-  }
+  },
+  update_cwd = true,
 })
