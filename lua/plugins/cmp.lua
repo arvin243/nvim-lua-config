@@ -26,9 +26,8 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-e>'] = cmp.mapping.abort(),  -- exit completion, esc works too
+    ['<C-e>'] = cmp.mapping.abort(), -- exit completion, esc works too
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
-
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -45,7 +44,6 @@ cmp.setup({
       "i",
       "s",
     }),
-
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
@@ -59,9 +57,9 @@ cmp.setup({
       "s",
     }),
   }),
-
   -- important settings
   sources = cmp.config.sources({
+    { name = 'copilot.nvim' },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
