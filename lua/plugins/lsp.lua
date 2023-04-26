@@ -15,7 +15,6 @@ require("mason").setup({
   }
 })
 
--- refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 require("mason-lspconfig").setup({
   ensure_installed = {
     "gopls",         -- golang
@@ -27,9 +26,13 @@ require("mason-lspconfig").setup({
 })
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local util = require "lspconfig/util"
 
+-- refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 require('lspconfig').gopls.setup({
   cmd = { 'gopls' },
+  fieltypes = { "go", "gomod", "gowork", "gotmpl" },
+  root_dir = util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
     gopls = {
       analyses = {
@@ -42,6 +45,12 @@ require('lspconfig').gopls.setup({
       staticcheck = true,
     },
   },
+})
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
+  callback = function()
+    vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+  end
 })
 
 require 'lspconfig'.lua_ls.setup {
