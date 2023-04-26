@@ -46,9 +46,15 @@ keymap.set("n", "<leader>bb", telescope.buffers, {})
 keymap.set('n', '<leader>ff', telescope.find_files, {})
 keymap.set('n', '<leader>fb', telescope.buffers, {})
 keymap.set('n', '<leader>fh', telescope.help_tags, {})
+keymap.set('n', '<leader>dd', telescope.diagnostics, {})
 -- keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>')
 keymap.set("n", "gr", telescope.lsp_references, {})
 keymap.set("n", "gb", telescope.git_branches, {})
+
+keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>")
+keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+
 
 -- nnoremap <leader>wp :set wrap<cr>
 -- " customize placeholder _TODO_
