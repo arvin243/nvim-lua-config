@@ -46,7 +46,7 @@ return require('packer').startup(function(use)
     'gcmt/wildfire.vim',
     'jiangmiao/auto-pairs',
 
-    'AndrewRadev/splitjoin.vim',
+    'AndrewRadev/splitjoin.vim', branch = 'main',
     'vim-scripts/swapcol.vim',
 
     -- conversion
