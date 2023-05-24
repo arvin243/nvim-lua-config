@@ -46,7 +46,7 @@ return require('packer').startup(function(use)
     'gcmt/wildfire.vim',
     'jiangmiao/auto-pairs',
 
-    'AndrewRadev/splitjoin.vim', branch = 'main',
+    { 'AndrewRadev/splitjoin.vim', branch = 'main', },
     'vim-scripts/swapcol.vim',
 
     -- conversion
@@ -65,7 +65,7 @@ return require('packer').startup(function(use)
     'tpope/vim-fugitive',
     'RRethy/vim-illuminate',
     'bronson/vim-trailing-whitespace',
-    'tversteeg/registers.nvim', branch = 'main',
+    { 'tversteeg/registers.nvim',  branch = 'main', },
   }
 
 
@@ -94,7 +94,7 @@ return require('packer').startup(function(use)
     "rafamadriz/friendly-snippets",
     "hrsh7th/cmp-path", -- file path
 
-    { "github/copilot.vim", branch = 'release', },
+    { "github/copilot.vim", branch = 'release', event = "InsertEnter" },
 
     -- playground
     'nvim-treesitter/playground',
