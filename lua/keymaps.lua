@@ -47,7 +47,7 @@ keymap.set('n', '<leader>ff', telescope.find_files, {})
 keymap.set('n', '<leader>fb', telescope.buffers, {})
 keymap.set('n', '<leader>fh', telescope.help_tags, {})
 keymap.set('n', '<leader>dd', telescope.diagnostics, {})
--- keymap.set('n', 'gr', '<cmd>Telescope lsp_references<cr>')
+keymap.set('n', '<leader>ts', telescope.treesitter, {})
 keymap.set("n", "gr", telescope.lsp_references, {})
 keymap.set("n", "gb", telescope.git_branches, {})
 
