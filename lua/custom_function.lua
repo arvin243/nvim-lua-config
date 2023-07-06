@@ -1,5 +1,6 @@
 -- command! TidyJIRA call TidyJIRAFunc()
 vim.api.nvim_exec([[
+  command! TidyJIRA call TidyJIRAFunc()
   function! TidyJIRAFunc()
     :set ft=markdown
     :v/SPPC/d
