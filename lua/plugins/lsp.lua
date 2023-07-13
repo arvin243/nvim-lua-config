@@ -30,11 +30,20 @@ local util = require "lspconfig/util"
 
 -- refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 require('lspconfig').gopls.setup({
-  cmd = { 'gopls' },
+  cmd = { 'gopls', 'serve' },
   fieltypes = { "go", "gomod", "gowork", "gotmpl" },
   root_dir = util.root_pattern("go.work", "go.mod", ".git"),
   settings = {
     gopls = {
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
       analyses = {
         nilness = true,
         unusedparams = true,

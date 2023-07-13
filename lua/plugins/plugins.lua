@@ -112,6 +112,7 @@ return require('packer').startup(function(use)
     },
 
     "christoomey/vim-tmux-navigator",
+
     {
       'nvim-telescope/telescope.nvim',
       branch = 'master',

@@ -17,4 +17,4 @@ vim.g.inline_edit_autowrite = 1
 -- command! Gblame :Git blame
 
 -- wildfire
-vim.g.wildfire_objects = {"iw", "i'", 'i"', "i)", "i]", "i}", "ip", "it"}
+vim.g.wildfire_objects = { "iw", "i'", 'i"', "i)", "i]", "i}", "ip", "it" }
