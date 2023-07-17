@@ -1,4 +1,5 @@
 vim.g.mapleader = ","
+vim.g.localmapleader = ","
 local keymap = vim.keymap
 local bufopts = { silent = true, noremap = true }
 
@@ -35,27 +36,6 @@ keymap.set("i", "<c-k>", "<esc>lC")
 keymap.set("n", "<c-e>", "2<c-e>")
 keymap.set("n", "<c-y>", "2<c-y>")
 
-keymap.set("v", "<leader>nr", ":InlineEdit<cr>")
-
--- search
-local telescope = require('telescope.builtin')
--- local pickers = require('telescope.pickers')
-keymap.set("n", "<leader>fg", telescope.live_grep, {})
-keymap.set("n", "<leader>sf", telescope.live_grep, {})
-keymap.set("n", "<leader>bb", telescope.buffers, {})
-keymap.set('n', '<leader>ff', telescope.find_files, {})
-keymap.set('n', '<leader>fb', telescope.buffers, {})
-keymap.set('n', '<leader>fh', telescope.help_tags, {})
-keymap.set('n', '<leader>dd', telescope.diagnostics, {})
-keymap.set('n', '<leader>ts', telescope.treesitter, {})
-keymap.set("n", "gr", telescope.lsp_references, {})
-keymap.set("n", "gb", telescope.git_branches, {})
-
-keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>")
-keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-
-
 -- nnoremap <leader>wp :set wrap<cr>
 -- " customize placeholder _TODO_
 -- " nnoremap <leader><c-t> a_TODO_<esc>
@@ -69,11 +49,6 @@ keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 -- " Move the tabs with tn and ti
 -- nnoremap t+ :tabmove +<CR>
 -- nnoremap t- :tabmove -<CR>
-
--- toggle
-keymap.set("n", "<leader>ee", ":NvimTreeToggle<cr>")
-keymap.set("n", "<leader>tm", ":TableModeToggle<cr>")
-keymap.set("n", "<leader>ll", ":IlluminateToggle<cr>")
 
 -- run vim run
 keymap.set("n", "<leader>rr", ":call RunVimRun()<cr>")
