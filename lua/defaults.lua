@@ -1,9 +1,13 @@
 local opt = vim.opt
 
+-- for nvim-tree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- apperance
 opt.termguicolors = true
 opt.signcolumn = "yes"
-vim.cmd[[colorscheme gruvbox]]
+-- vim.cmd[[colorscheme gruvbox]]
 
 -- display
 opt.relativenumber = false
