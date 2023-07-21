@@ -1,5 +1,6 @@
 return {
   "christoomey/vim-tmux-navigator",
+
   {
     'nvim-telescope/telescope.nvim',
     branch = 'master',
