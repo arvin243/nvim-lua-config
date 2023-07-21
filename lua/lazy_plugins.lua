@@ -25,8 +25,6 @@ require("lazy").setup({
 
   -- completion
   require("plugins.cmp"),
-  -- "L3MON4D3/LuaSnip", -- snippets engine, otherwise auto-completion will fail
-  -- "saadparwaiz1/cmp_luasnip",
   "rafamadriz/friendly-snippets",
   require("plugins.copilot"),
 
