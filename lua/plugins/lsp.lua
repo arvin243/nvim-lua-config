@@ -39,21 +39,31 @@ return {
           },
         },
       })
-      -- -- gofumpt on save
-      -- vim.api.nvim_create_autocmd('BufWritePre', {
-      --   pattern = '*.go',
-      --   callback = function()
-      --     vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
-      --   end
-      -- })
+      -- gofumpt on save
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*.go',
+        callback = function()
+          vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+        end
+      })
 
-      vim.keymap.set("n", "<leader>do", "<cmd>lua vim.diagnostic.open_float()<CR>")
-      vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-      vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
+      -- See `:help vim.lsp.*` for documentation on any of the below functions
+      local keymap = vim.keymap
+      local opts = { silent = true }
+      keymap.set("n", "<leader>do", vim.diagnostic.open_float, opts)
+      keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+      keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+      keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+      keymap.set('n', '<C-]>', vim.lsp.buf.definition, opts)
+      keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+      keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+      keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+      keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+      keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+      keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+      keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
 
-      require("lspconfig").lua_ls.setup {
-        capabilities = capabilities,
-      }
+      require("lspconfig").lua_ls.setup { capabilities = capabilities }
       require("lspconfig").marksman.setup {}
       require("lspconfig").pyright.setup {}
       require("lspconfig").rust_analyzer.setup {}
@@ -61,6 +71,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    lazy = false,
     build = ":MasonUpdate", -- :MasonUpdate updates registry contents
     config = function()
       require("mason").setup({
@@ -76,6 +87,7 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim", -- a bridge between mason.nvim and lspconfig
+    lazy = false,
     dependencies = {
       "neovim/nvim-lspconfig",
     },
@@ -88,6 +100,7 @@ return {
           "pyright",       -- python
           "rust_analyzer", -- rust
         },
+        automatic_installation = true,
       })
     end
   },
