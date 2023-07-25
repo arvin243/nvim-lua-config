@@ -17,7 +17,7 @@ return {
       -- lsp_on_attach = lsp.on_attach,
       lsp_gofumpt = true,
       lsp_codelens = true,
-      -- lsp_inlay_hints = { enable = false },
+      lsp_inlay_hints = { enable = false },
     })
 
     local format_sync_grp = vim.api.nvim_create_augroup("Format", {})
