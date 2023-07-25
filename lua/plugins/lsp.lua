@@ -50,7 +50,7 @@ return {
       -- See `:help vim.lsp.*` for documentation on any of the below functions
       local keymap = vim.keymap
       local opts = { silent = true }
-      keymap.set("n", "<leader>do", vim.diagnostic.open_float, opts)
+      -- keymap.set("n", "<leader>do", vim.diagnostic.open_float, opts) -- wrong cmd
       keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
       keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
       keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
