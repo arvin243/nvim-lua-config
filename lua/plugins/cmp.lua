@@ -46,9 +46,7 @@ return {
         { name = 'nvim_lsp' },
         { name = 'copilot' }, -- copilot.nvim?
         { name = 'path' },
-      }, {
-        { name = 'buffer' },
-      })
+      }, { { name = 'buffer' }, })
     })
   end
 }

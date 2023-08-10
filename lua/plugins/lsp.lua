@@ -39,13 +39,14 @@ return {
           },
         },
       })
-      -- -- gofumpt on save
-      -- vim.api.nvim_create_autocmd('BufWritePre', {
-      --   pattern = '*.go',
-      --   callback = function()
-      --     vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
-      --   end
-      -- })
+
+      -- gofumpt on save
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        pattern = '*.go',
+        callback = function()
+          vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+        end
+      })
 
       -- See `:help vim.lsp.*` for documentation on any of the below functions
       local keymap = vim.keymap

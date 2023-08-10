@@ -19,9 +19,7 @@ return {
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('lualine').setup({
-        options = {
-          theme = 'gruvbox'
-        }
+        options = { theme = 'gruvbox' },
       })
     end
   },
@@ -41,7 +39,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     config = function()
-      require('gitsigns').setup {
+      require('gitsigns').setup({
         signs = {
           add = { text = '+' },
           change = { text = '~' },
@@ -49,7 +47,7 @@ return {
           topdelete = { text = '‾' },
           changedelete = { text = '~' },
         },
-      }
+      })
     end
   },
 }
