@@ -8,6 +8,7 @@ return {
       "nvim-lua/plenary.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
+        dependencies = { "junegunn/fzf.vim" },
         build = "make",
         config = function()
           require("telescope").load_extension("fzf")

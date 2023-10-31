@@ -1,10 +1,9 @@
-
 return {
   -- theme
   {
     -- 'srcery-colors/srcery-vim',
     "morhetz/gruvbox",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- load the colorscheme here
@@ -28,12 +27,14 @@ return {
   {
     "mhinz/vim-startify",
     config = function()
-      vim.g.startify_change_to_dir=0
-      vim.g.startify_change_to_vcs_root=1
-      vim.g.startify_session_dir='$HOME/.vim/sessions'
-      vim.g.startify_files_number=20
+      vim.g.startify_change_to_dir = 0
+      vim.g.startify_change_to_vcs_root = 1
+      vim.g.startify_session_dir = '$HOME/.vim/sessions'
+      vim.g.startify_files_number = 20
     end
   },
+
+  -- { 'echasnovski/mini.nvim', version = false },
 
   -- signs
   {

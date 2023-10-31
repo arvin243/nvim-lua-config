@@ -22,7 +22,7 @@ require("lazy").setup({
   -- "p00f/nvim-ts-rainbow", -- rainbow bracket
 
   require("plugins.lsp"),
-  -- require("plugins.golang"),
+  require("plugins.golang"),
 
   -- completion
   require("plugins.cmp"),
