@@ -519,7 +519,11 @@ require("lazy").setup({
       end
 
       cmp.setup({
-        snippet = {},
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body)
+          end,
+        },
         mapping = cmp.mapping.preset.insert({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -552,7 +556,7 @@ require("lazy").setup({
     end
   },
   -- snippets
-  "rafamadriz/friendly-snippets",
+  -- "rafamadriz/friendly-snippets",
   -- copilot
   {
     "github/copilot.vim",
