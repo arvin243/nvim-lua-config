@@ -152,7 +152,7 @@ keymap.set("n", "<c-y>", "2<c-y>")
 
 -- run vim run
 keymap.set("n", "<leader>rr", ":call RunVimRun()<cr>")
-
+keymap.set("n", "<leader>rt", ":call RunVimTest()<cr>")
 
 --
 -- lazy plugins
@@ -732,37 +732,48 @@ vim.api.nvim_exec([[
 
 vim.api.nvim_exec([[
 func! RunVimRun()
-    :w
-    if &filetype == 'sh'
-        :!time bash %
-    elseif &filetype == 'go'
-        " :GoRun
-        set splitbelow
-        :sp
-        :term go run %
-    elseif &filetype == 'python'
-        set splitbelow
-        :sp
-        :term python3 %
-    elseif &filetype == 'markdown'
-        exec "MarkdownPreview"
-    elseif &filetype == 'xhtml'
-        :!open % -a Google\ Chrome
-    elseif &filetype == 'dot'
-        let current_file_name=expand('%:r')
-        let output_file_path=current_file_name . '.png'
-        exec "!dot -Tpng % -o " . output_file_path
-        exec "!open " . output_file_path
-    elseif &filetype == 'mermaid'
-        " let current_file_name=expand('%:r')
-        " let output_file_path=current_file_name . '.png'
-        " exec "!mmdc -H -i " . current_file_name . ".mmd -o " output_file_path . " -t bright -b transparent"
-        " exec "!open " . output_file_path
-        exec "!mermaid %"
-    elseif &filetype == 'scala'
-        set splitbelow
-        :sp
-        :term scala %
-    endif
+  :w
+  if &filetype == 'sh'
+    :!time bash %
+  elseif &filetype == 'go'
+    " :GoRun
+    set splitbelow
+    :sp
+    :term go run %
+  elseif &filetype == 'python'
+    set splitbelow
+    :sp
+    :term python3 %
+  elseif &filetype == 'markdown'
+    exec "MarkdownPreview"
+  elseif &filetype == 'xhtml'
+    :!open % -a Google\ Chrome
+  elseif &filetype == 'dot'
+    let current_file_name=expand('%:r')
+    let output_file_path=current_file_name . '.png'
+    exec "!dot -Tpng % -o " . output_file_path
+    exec "!open " . output_file_path
+  elseif &filetype == 'mermaid'
+    " let current_file_name=expand('%:r')
+    " let output_file_path=current_file_name . '.png'
+    " exec "!mmdc -H -i " . current_file_name . ".mmd -o " output_file_path . " -t bright -b transparent"
+    " exec "!open " . output_file_path
+    exec "!mermaid %"
+  elseif &filetype == 'scala'
+    set splitbelow
+    :sp
+    :term scala %
+  endif
+endfunc
+]], true)
+
+vim.api.nvim_exec([[
+func! RunVimTest()
+  :w
+  if &filetype == 'sh'
+    :!time bash %
+  elseif &filetype == 'go'
+    :GoTestFile -v
+  endif
 endfunc
 ]], true)
