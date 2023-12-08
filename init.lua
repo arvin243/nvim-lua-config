@@ -80,6 +80,7 @@ opt.softtabstop          = 4;
 opt.expandtab            = true;
 opt.smartindent          = true;
 vim.cmd [[autocmd FileType lua,jsom,yaml setlocal ts=2 sts=2 sw=2]]
+vim.cmd [[autocmd FileType json set formatprg=jq]]
 
 -- appearance
 opt.number           = true;
