@@ -170,7 +170,7 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
-vim.opt.rtp:prepend(lazypath)
+opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
 
@@ -238,7 +238,7 @@ require("lazy").setup({
       "andrewradev/inline_edit.vim", -- narrow region
       config = function()
         vim.g.inline_edit_autowrite = 1
-        vim.keymap.set("v", "<leader>nr", ":InlineEdit<cr>")
+        keymap.set("v", "<leader>nr", ":InlineEdit<cr>")
       end
     },
     -- auto increment, vis & visincr
@@ -274,7 +274,7 @@ require("lazy").setup({
     {
       'dhruvasagar/vim-table-mode',
       config = function()
-        vim.keymap.set("n", "<leader>tm", ":TableModeToggle<cr>")
+        keymap.set("n", "<leader>tm", ":TableModeToggle<cr>")
       end
     },
     'godlygeek/tabular',
@@ -284,7 +284,7 @@ require("lazy").setup({
     {
       'RRethy/vim-illuminate',
       config = function()
-        vim.keymap.set("n", "<leader>ll", ":IlluminateToggle<cr>")
+        keymap.set("n", "<leader>ll", ":IlluminateToggle<cr>")
       end
     },
     'bronson/vim-trailing-whitespace',
@@ -404,7 +404,6 @@ require("lazy").setup({
         })
 
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local keymap = vim.keymap
         local opts = { silent = true }
         -- keymap.set("n", "<leader>do", vim.diagnostic.open_float, opts) -- wrong cmd
         keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -598,7 +597,6 @@ require("lazy").setup({
         },
       },
       config = function()
-        local keymap = vim.keymap
         local builtin = require('telescope.builtin')
         keymap.set('n', '<leader>ff', builtin.find_files, {})
         keymap.set("n", "<leader>fg", builtin.live_grep, {})
@@ -653,7 +651,7 @@ require("lazy").setup({
     'nvim-tree/nvim-tree.lua',
     dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function()
-      vim.keymap.set("n", "<leader>ee", ":NvimTreeToggle<cr>")
+      keymap.set("n", "<leader>ee", ":NvimTreeToggle<cr>")
 
       require("nvim-tree").setup({
         auto_reload_on_write = true,
@@ -674,19 +672,20 @@ require("lazy").setup({
       ft = { "markdown" },
       build = function() vim.fn["mkdp#util#install"]() end,
       config = function()
-        vim.g.mkdp_auto_start = 0
-        vim.g.mkdp_auto_close = 1
-        vim.g.mkdp_refresh_slow = 0
-        vim.g.mkdp_command_for_global = 0
-        vim.g.mkdp_open_to_the_world = 0
-        vim.g.mkdp_open_ip = ''
-        vim.g.mkdp_echo_preview_url = 0
-        vim.g.mkdp_browserfunc = ''
-        vim.g.mkdp_markdown_css = ''
-        vim.g.mkdp_highlight_css = ''
-        vim.g.mkdp_port = ''
-        vim.g.mkdp_page_title = '「${name}」'
-        vim.g.mkdp_preview_options = {
+        local g = vim.g
+        g.mkdp_auto_start = 0
+        g.mkdp_auto_close = 1
+        g.mkdp_refresh_slow = 0
+        g.mkdp_command_for_global = 0
+        g.mkdp_open_to_the_world = 0
+        g.mkdp_open_ip = ''
+        g.mkdp_echo_preview_url = 0
+        g.mkdp_browserfunc = ''
+        g.mkdp_markdown_css = ''
+        g.mkdp_highlight_css = ''
+        g.mkdp_port = ''
+        g.mkdp_page_title = '「${name}」'
+        g.mkdp_preview_options = {
           disable_sync_scroll = 0,
           sync_scroll_type = 'middle',
           hide_yaml_meta = 1,
