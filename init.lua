@@ -711,6 +711,10 @@ require("lazy").setup({
         metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       end
     },
+    {
+      "jceb/vim-orgmode",
+      ft = { "org" },
+    },
   },
 
   -- others
