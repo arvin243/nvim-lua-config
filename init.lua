@@ -81,6 +81,7 @@ opt.expandtab            = true;
 opt.smartindent          = true;
 vim.cmd [[autocmd FileType lua,jsom,yaml setlocal ts=2 sts=2 sw=2]]
 vim.cmd [[autocmd FileType json set formatprg=jq]]
+vim.cmd [[autocmd BufNewFile,BufRead *.typst set filetype=typst]]
 
 -- appearance
 opt.number           = true;
@@ -334,6 +335,7 @@ require("lazy").setup({
             -- "rust",
             "go",
             "markdown", "markdown_inline",
+            "typst",
             "vim",
           },
 
@@ -669,7 +671,7 @@ require("lazy").setup({
   {
     {
       "iamcco/markdown-preview.nvim",
-      ft = { "markdown" },
+      ft = "markdown",
       build = function() vim.fn["mkdp#util#install"]() end,
       config = function()
         local g = vim.g
@@ -691,6 +693,12 @@ require("lazy").setup({
           hide_yaml_meta = 1,
         }
       end
+    },
+    {
+      'chomosuke/typst-preview.nvim',
+      ft = 'typst',
+      version = '0.1.*',
+      build = function() require 'typst-preview'.update() end,
     },
     {
       "scalameta/nvim-metals",
@@ -750,6 +758,8 @@ func! RunVimRun()
     :term python3 %
   elseif &filetype == 'markdown'
     exec "MarkdownPreview"
+  elseif &filetype == 'typst'
+    exec "TypstPreview"
   elseif &filetype == 'xhtml'
     :!open % -a Google\ Chrome
   elseif &filetype == 'dot'
