@@ -479,7 +479,7 @@ require("lazy").setup({
         goimport = "gopls",
         fillstruct = "gopls",
         gofmt = "gofumpt",
-        max_line_len = 256,
+        -- max_line_len = 256,
 
         lsp_cfg = true,
         -- lsp_on_attach = lsp.on_attach,
