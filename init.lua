@@ -476,9 +476,9 @@ require("lazy").setup({
       -- local lsp = require('plugins.lsp')
       require("go").setup({
         go = "go",
-        goimport = "gopls",
-        fillstruct = "gopls",
+        goimports = "gopls",
         gofmt = "gofumpt",
+        fillstruct = "gopls",
         -- max_line_len = 256,
 
         lsp_cfg = true,
