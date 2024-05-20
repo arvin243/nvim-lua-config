@@ -3,109 +3,108 @@
 --
 local opt    = vim.opt
 local keymap = vim.keymap
-local g      = vim.g
 
 
 -- for nvim-tree
-g.loaded_netrw       = 1
-g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw       = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- apperance
-opt.termguicolors    = true
-opt.signcolumn       = "yes"
+opt.termguicolors        = true
+opt.signcolumn           = "yes"
 -- vim.cmd[[colorscheme gruvbox]]
 
 -- display
-opt.relativenumber   = false
-opt.wrap             = false
-opt.cursorline       = true
-opt.hidden           = true;
-opt.showcmd          = false;
-opt.inccommand       = "nosplit";
+opt.relativenumber       = false
+opt.wrap                 = false
+opt.cursorline           = true
+opt.hidden               = true;
+opt.showcmd              = false;
+opt.inccommand           = "nosplit";
 
 -- scroll
-opt.scrolloff        = 4;
-opt.sidescrolloff    = 10;
-opt.laststatus       = 2;
+opt.scrolloff            = 4;
+opt.sidescrolloff        = 10;
+opt.laststatus           = 2;
 
 -- enable mouse
 -- opt.mouse:append("a")
-opt.mouse            = "nv";
+opt.mouse                = "nv";
 
 -- split window
-opt.splitright       = true
-opt.splitbelow       = true
+opt.splitright           = true
+opt.splitbelow           = true
 
 -- search
-opt.ignorecase       = true
-opt.smartcase        = true
-opt.incsearch        = true;
-opt.hlsearch         = true;
+opt.ignorecase           = true
+opt.smartcase            = true
+opt.incsearch            = true;
+opt.hlsearch             = true;
 -- opt.wildignorecase = true;
 
 -- temp files, backup, swap, etc
-opt.backup           = false;
-opt.writebackup      = false;
-opt.swapfile         = false;
+opt.backup               = false;
+opt.writebackup          = false;
+opt.swapfile             = false;
 
 -- spell
-opt.spell            = false;
+opt.spell                = false;
 
 -- errorbell
-opt.errorbells       = false;
+opt.errorbells           = false;
 
 -- match bracket
-opt.showmatch        = true;
-opt.matchtime        = 2;
+opt.showmatch            = true;
+opt.matchtime            = 2;
 
 -- editing
-opt.autoread         = true; -- auto read if file is modified in other place
-opt.title            = true;
-opt.wildmenu         = true;
+opt.autoread             = true; -- auto read if file is modified in other place
+opt.title                = true;
+opt.wildmenu             = true;
 
 -- history
-opt.history          = 1000;
+opt.history              = 1000;
 
 -- fold
-opt.foldenable       = true;
-opt.foldmethod       = 'indent'
-opt.foldlevel        = 99
-opt.foldenable       = true
-opt.foldlevelstart   = 99
+opt.foldenable           = true;
+opt.foldmethod           = 'indent'
+opt.foldlevel            = 99
+opt.foldenable           = true
+opt.foldlevelstart       = 99
 
 -- indentation
-opt.autoindent       = true;
-opt.tabstop          = 4;
-opt.shiftwidth       = 4;
-opt.softtabstop      = 4;
-opt.expandtab        = true;
-opt.smartindent      = true;
+opt.autoindent           = true;
+opt.tabstop              = 4;
+opt.shiftwidth           = 4;
+opt.softtabstop          = 4;
+opt.expandtab            = true;
+opt.smartindent          = true;
 vim.cmd [[autocmd FileType lua,jsom,yaml setlocal ts=2 sts=2 sw=2]]
 vim.cmd [[autocmd FileType json set formatprg=jq]]
 vim.cmd [[autocmd BufNewFile,BufRead *.typst set filetype=typst]]
 vim.cmd [[autocmd BufNewFile,BufRead *.typ set filetype=typst]]
 
 -- appearance
-opt.number       = true;
-opt.textwidth    = 120;
+opt.number           = true;
+opt.textwidth        = 120;
 
 -- undo file
-opt.undofile     = false;
+opt.undofile         = false;
 
 -- faster scroll
-opt.ttyfast      = true;
-opt.lazyredraw   = true;
+opt.ttyfast          = true;
+opt.lazyredraw       = true;
 
 -- window local
-vim.wo.wrap      = false;
+vim.wo.wrap          = false;
 
 --
 -- keymaps
 --
 
-g.mapleader      = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
-g.localmapleader = ","
-local bufopts    = { silent = true, noremap = true }
+vim.g.mapleader      = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
+vim.g.localmapleader = ","
+local bufopts        = { silent = true, noremap = true }
 
 keymap.set("n", "<esc>", ":nohl<CR>")
 keymap.set("n", "Q", "<nop>")
@@ -135,6 +134,7 @@ keymap.set("i", "<c-a>", "<home>")
 keymap.set("i", "<c-e>", "<end>")
 keymap.set("i", "<c-d>", "<del>")
 keymap.set("i", "<c-k>", "<esc>lC")
+keymap.set("i", "jk", "<esc>")
 
 -- faster scroll
 keymap.set("n", "<c-e>", "2<c-e>")
@@ -420,7 +420,10 @@ require("lazy").setup({
         keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
         keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
 
-        require("lspconfig").lua_ls.setup { capabilities = capabilities }
+        require("lspconfig").lua_ls.setup {
+          capabilities = capabilities,
+          settings = { Lua = { diagnostics = { globals = { "vim" } } } } -- ignore vim global in nvim config
+        }
         require("lspconfig").marksman.setup {}
         require("lspconfig").pyright.setup {}
         require("lspconfig").rust_analyzer.setup {}
@@ -591,6 +594,7 @@ require("lazy").setup({
         "nvim-lua/plenary.nvim",
         {
           "nvim-telescope/telescope-fzf-native.nvim",
+          "nvim-tree/nvim-web-devicons",
           dependencies = { "junegunn/fzf.vim" },
           build = "make",
           config = function()
@@ -795,15 +799,15 @@ endfunc
 --
 -- for neovide
 --
-if g.neovide then
-  g.neovide_transparency            = 0.8
-  g.neovide_hide_mouse_when_typing  = true
-  g.neovide_no_idle                 = false
-  g.neovide_fullscreen              = true
-  g.neovide_remember_window_size    = true
-  g.neovide_cursor_animation_length = 0.1
-  g.neovide_cursor_antialiasing     = false
-  g.neovide_cursor_vfx_mode         = "torpedo"
+if vim.g.neovide then
+  vim.g.neovide_transparency            = 0.8
+  vim.g.neovide_hide_mouse_when_typing  = true
+  vim.g.neovide_no_idle                 = false
+  vim.g.neovide_fullscreen              = true
+  vim.g.neovide_remember_window_size    = true
+  vim.g.neovide_cursor_animation_length = 0.1
+  vim.g.neovide_cursor_antialiasing     = false
+  vim.g.neovide_cursor_vfx_mode         = "torpedo"
 
   keymap.set('n', '<D-s>', ':w<CR>')      -- Save
   keymap.set('v', '<D-c>', '"+y')         -- Copy
