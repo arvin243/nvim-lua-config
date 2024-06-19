@@ -514,37 +514,18 @@ require("lazy").setup({
     end,
   },
 
-  -- completion & snippet & copilot
+  -- completion
   {
     "hrsh7th/nvim-cmp",
+    after = {
+      "L3MON4D3/LuaSnip",
+      "github/copilot.vim",
+    },
     dependencies = {
-      {
-        "github/copilot.vim",
-        -- branch = "release",
-        event = "InsertEnter",
-        config = function()
-          vim.g.copilot_enabled = true
-          vim.g.copilot_assume_mapped = true
-          vim.g.copilot_no_tab_map = true
-          -- vim.api.nvim_set_keymap('i', '<c-p>', '<Plug>(copilot-suggest)', {})
-          -- vim.api.nvim_set_keymap('i', '<c-n>', '<Plug>(copilot-next)', { silent = true })
-          -- vim.api.nvim_set_keymap('i', '<c-l>', '<Plug>(copilot-previous)', { silent = true })
-          vim.cmd('imap <silent><script><expr> <C-J> copilot#Accept("")')
-          vim.cmd([[
-        let g:copilot_filetypes = {
-        \ 'TelescopePrompt': v:false,
-        \ }
-        ]])
-        end
-      },
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-copilot" },
       { "hrsh7th/cmp-path" }, -- file path
       -- snippets
-      {
-        "L3MON4D3/LuaSnip",
-        version = "v2.*"
-      },
       { "saadparwaiz1/cmp_luasnip" },
     },
     config = function()
@@ -616,6 +597,44 @@ require("lazy").setup({
           { name = 'path' },
         }, { { name = 'buffer' }, })
       })
+    end
+  },
+
+  -- snippets
+  {
+    "L3MON4D3/LuaSnip",
+    version = "v2.*",
+    config = function()
+      local ls = require("luasnip")
+      local lssnip = ls.snippet
+      local lsfunc = ls.function_node
+
+      ls.add_snippets("all", {
+        lssnip("dt", lsfunc(function() return os.date('%Y-%m-%d') end, {})),
+        lssnip("ts10", lsfunc(function() return tostring(os.time()) end, {})),
+        lssnip("ts13", lsfunc(function() return tostring(os.time() * 1000) end, {})),
+      })
+    end
+  },
+
+  -- copilot
+  {
+    "github/copilot.vim",
+    -- branch = "release",
+    event = "InsertEnter",
+    config = function()
+      vim.g.copilot_enabled = true
+      vim.g.copilot_assume_mapped = true
+      vim.g.copilot_no_tab_map = true
+      -- vim.api.nvim_set_keymap('i', '<c-p>', '<Plug>(copilot-suggest)', {})
+      -- vim.api.nvim_set_keymap('i', '<c-n>', '<Plug>(copilot-next)', { silent = true })
+      -- vim.api.nvim_set_keymap('i', '<c-l>', '<Plug>(copilot-previous)', { silent = true })
+      vim.cmd('imap <silent><script><expr> <C-J> copilot#Accept("")')
+      vim.cmd([[
+        let g:copilot_filetypes = {
+        \ 'TelescopePrompt': v:false,
+        \ }
+        ]])
     end
   },
 
