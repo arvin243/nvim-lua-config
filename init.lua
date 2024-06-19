@@ -15,7 +15,7 @@ opt.signcolumn           = "yes"
 -- vim.cmd[[colorscheme gruvbox]]
 
 -- display
-opt.relativenumber       = false
+opt.relativenumber       = true
 opt.wrap                 = false
 opt.cursorline           = true
 opt.hidden               = true;
@@ -448,9 +448,7 @@ require("lazy").setup({
     {
       "williamboman/mason-lspconfig.nvim", -- a bridge between mason.nvim and lspconfig
       lazy = false,
-      dependencies = {
-        "neovim/nvim-lspconfig",
-      },
+      dependencies = { "neovim/nvim-lspconfig", },
       config = function()
         require("mason-lspconfig").setup({
           ensure_installed = {
@@ -474,6 +472,7 @@ require("lazy").setup({
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
+      "hrsh7th/nvim-cmp",
     },
     config = function()
       -- local lsp = require('plugins.lsp')
@@ -489,6 +488,18 @@ require("lazy").setup({
         lsp_gofumpt = true,
         lsp_codelens = true,
         lsp_inlay_hints = { enable = false },
+
+        luasnip = true,
+      })
+
+      -- snippet
+      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      require('go').setup({
+        -- other setups ....
+        lsp_cfg = {
+          capabilities = capabilities,
+          -- other setups
+        },
       })
 
       -- -- use format from lsp
@@ -503,42 +514,72 @@ require("lazy").setup({
     end,
   },
 
-  -- completion
+  -- completion & snippet & copilot
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      { "github/copilot.vim" },
+      {
+        "github/copilot.vim",
+        -- branch = "release",
+        event = "InsertEnter",
+        config = function()
+          vim.g.copilot_enabled = true
+          vim.g.copilot_assume_mapped = true
+          vim.g.copilot_no_tab_map = true
+          -- vim.api.nvim_set_keymap('i', '<c-p>', '<Plug>(copilot-suggest)', {})
+          -- vim.api.nvim_set_keymap('i', '<c-n>', '<Plug>(copilot-next)', { silent = true })
+          -- vim.api.nvim_set_keymap('i', '<c-l>', '<Plug>(copilot-previous)', { silent = true })
+          vim.cmd('imap <silent><script><expr> <C-J> copilot#Accept("")')
+          vim.cmd([[
+        let g:copilot_filetypes = {
+        \ 'TelescopePrompt': v:false,
+        \ }
+        ]])
+        end
+      },
       { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-vsnip" },
-      { "hrsh7th/vim-vsnip" },
       { "hrsh7th/cmp-copilot" },
       { "hrsh7th/cmp-path" }, -- file path
+      -- snippets
+      {
+        "L3MON4D3/LuaSnip",
+        version = "v2.*"
+      },
+      { "saadparwaiz1/cmp_luasnip" },
     },
     config = function()
       local cmp = require("cmp")
-
-      -- used lately
-      local check_backspace = function()
-        local col = vim.fn.col "." - 1
-        return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-      end
+      local luasnip = require("luasnip")
 
       cmp.setup({
         snippet = {
           expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
+            require('luasnip').lsp_expand(args.body)
           end,
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-e>'] = cmp.mapping.abort(), -- exit completion, esc works too
-          ['<CR>'] = cmp.mapping.confirm({ select = true }),
+          ['<CR>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if luasnip.expandable() then
+                luasnip.expand()
+              else
+                cmp.confirm({
+                  select = true,
+                })
+              end
+            else
+              fallback()
+            end
+          end),
+
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif check_backspace() then
-              fallback()
+            elseif luasnip.locally_jumpable(1) then
+              luasnip.jump(1)
             else
               fallback()
             end
@@ -546,40 +587,35 @@ require("lazy").setup({
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
             else
               fallback()
             end
           end, { "i", "s" }),
         }),
-        -- important settings
+
+        formatting = {
+          fields = { 'abbr', 'menu' },
+
+          format = function(entry, vim_item)
+            vim_item.menu = ({
+              nvim_lsp = '[Lsp]',
+              luasnip = '[LuaSnip]',
+              buffer = '[File]',
+              path = '[Path]',
+            })[entry.source.name]
+            return vim_item
+          end,
+        },
+
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
-          { name = 'copilot' }, -- copilot.nvim?
+          { name = 'luasnip' },
+          { name = 'copilot' },
           { name = 'path' },
         }, { { name = 'buffer' }, })
       })
-    end
-  },
-  -- snippets
-  -- "rafamadriz/friendly-snippets",
-  -- copilot
-  {
-    "github/copilot.vim",
-    -- branch = "release",
-    event = "InsertEnter",
-    config = function()
-      vim.g.copilot_enabled = true
-      vim.g.copilot_assume_mapped = true
-      vim.g.copilot_no_tab_map = true
-      -- vim.api.nvim_set_keymap('i', '<c-p>', '<Plug>(copilot-suggest)', {})
-      -- vim.api.nvim_set_keymap('i', '<c-n>', '<Plug>(copilot-next)', { silent = true })
-      -- vim.api.nvim_set_keymap('i', '<c-l>', '<Plug>(copilot-previous)', { silent = true })
-      vim.cmd('imap <silent><script><expr> <C-J> copilot#Accept("")')
-      vim.cmd([[
-    let g:copilot_filetypes = {
-    \ 'TelescopePrompt': v:false,
-    \ }
-    ]])
     end
   },
 
