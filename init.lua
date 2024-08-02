@@ -1,9 +1,8 @@
 --
 -- defaults
 --
-local opt    = vim.opt
-local keymap = vim.keymap
-
+local opt                = vim.opt
+local keymap             = vim.keymap
 
 -- for nvim-tree
 vim.g.loaded_netrw       = 1
@@ -208,10 +207,36 @@ require("lazy").setup({
       config = function()
         vim.g.startify_change_to_dir = 0
         vim.g.startify_change_to_vcs_root = 1
-        -- vim.g.startify_session_dir = "$HOME/.config/nvim/"
         vim.g.startify_files_number = 20
+        -- vim.g.startify_session_dir = "$HOME/.config/nvim/"
       end
     },
+    -- {
+    --   "nvimdev/dashboard-nvim",
+    --   event = "UIEnter",
+    --   config = function()
+    --     require('dashboard').setup {
+    --       theme = "hyper",
+    --       shortcut_type = "number",
+    --       change_to_vcs_root = true,
+    --       config = {
+    --         -- week_header = { enable = true },
+    --         mru = { limit = 10, icon = 'MRU', label = '', cwd_only = false },
+    --         project = { enable = true, limit = 10, icon = 'Proj', label = '', action = 'Telescope find_files cwd=' },
+    --         shortcut = {
+    --           { desc = 'LazyUpdate', group = 'Include',  action = 'Lazy update',          key = 'u', },
+    --           { desc = 'Mason',      group = 'Include',  action = 'Mason',                key = 'm', },
+    --           { desc = 'Files',      group = 'Function', action = 'Telescope find_files', key = 'f', },
+    --           { desc = 'Grep',       group = 'Function', action = 'Telescope live_grep',  key = 'g', },
+    --         },
+    --       },
+    --     }
+    --   end,
+    --   dependencies = {
+    --     'nvim-tree/nvim-web-devicons',
+    --     "nvim-telescope/telescope.nvim",
+    --   },
+    -- },
 
     -- { "echasnovski/mini.nvim", version = false },
 
@@ -236,7 +261,6 @@ require("lazy").setup({
   -- keybinding & command
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
     opts = { preset = "mordern" },
     keys = { {
       "<leader>?",
@@ -247,13 +271,13 @@ require("lazy").setup({
 
   -- editing
   {
-    { "tpope/vim-repeat",   event = "VeryLazy" },
-    { "tpope/vim-surround", event = "VeryLazy" },
-    { 'tpope/vim-sleuth',   event = 'VeryLazy' }, -- auto tab/indent
-    { "tpope/vim-abolish",  event = "VeryLazy" }, -- change case, etc
+    { "tpope/vim-repeat",   event = { "BufReadPre", "BufNewFile" } },
+    { "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } },
+    { 'tpope/vim-sleuth',   event = { "BufReadPre", "BufNewFile" } }, -- auto tab/indent
+    { "tpope/vim-abolish",  event = "VeryLazy" },                     -- change case, etc
     {
-      "andrewradev/inline_edit.vim", -- narrow region
-      keys = { { "<leader>nr", "<cmd>InlineEdit<cr>", mode = { "v" } } },
+      "andrewradev/inline_edit.vim",                                  -- narrow region
+      keys = { { "<leader>nr", "<cmd>InlineEdit<cr>", mode = "v" } },
       config = function()
         vim.g.inline_edit_autowrite = 1
       end
@@ -262,10 +286,10 @@ require("lazy").setup({
     { "vim-scripts/vis",         cmd = { "B", "S" } },
     { "vim-scripts/VisIncr",     cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
     { "windwp/nvim-autopairs",   event = "InsertEnter" },
-    { "vim-scripts/swapcol.vim", event = "VeryLazy" },
+    { "vim-scripts/swapcol.vim", cmd = { "Swapcols" } },
 
     -- comment
-    -- {"scrooloose/nerdcommenter", event = "VeryLazy" },
+    -- {"scrooloose/nerdcommenter", event = { "BufReadPre", "BufNewFile" } },
     {
       "numToStr/Comment.nvim",
       keys = { "<leader>cc", "<leader>bc" },
@@ -290,16 +314,34 @@ require("lazy").setup({
     },
 
     -- format
-    { "nvie/vim-rst-tables",             event = "VeryLazy" },
-    { "dhruvasagar/vim-table-mode",      keys = { { "<leader>tm", "<cmd>TableModeToggle<cr>" } } },
-    { "godlygeek/tabular",               event = "VeryLazy" },
-
+    -- { "nvie/vim-rst-tables",        event = {"BufReadPre", "BufNewFile"} },
+    { "dhruvasagar/vim-table-mode", cmd = { "TableModeToggle" }, keys = { { "<leader>tm", "<cmd>TableModeToggle<cr>" } } },
+    { "godlygeek/tabular",          cmd = { "Tabularize" } },
+    {
+      "stevearc/conform.nvim",
+      event = { "BufWritePre" },
+      cmd = { "ConformInfo" },
+      keys = { { "<leader>fm", function() require("conform").format({ async = true }) end } },
+      opts = {
+        formatters_by_ft = {
+          go = { "gofumpt" },
+          javascript = { "prettierd", "prettier", stop_after_first = true },
+          lua = { "stylua" },
+          python = { "isort", "black" },
+          rust = { "rustfmt", lsp_format = "fallback" },
+        },
+        default_format_opts = { lsp_format = "fallback" },
+        format_on_save = { timeout_ms = 500 },
+        formatters = { shfmt = { prepend_args = { "-i", "2" }, }, },
+      },
+      init = function() vim.o.formatexpr = "v:lua.require'conform'.formatexpr()" end,
+    },
     -- git
-    { "tpope/vim-fugitive",              event = "VeryLazy" },
+    { "tpope/vim-fugitive",              event = { "BufReadPre", "BufNewFile" } },
 
     -- information
     { "RRethy/vim-illuminate",           keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } }, },
-    { "bronson/vim-trailing-whitespace", event = "VeryLazy" },
+    { "bronson/vim-trailing-whitespace", event = { "BufReadPre", "BufNewFile" } },
 
     -- splitjoin
     {
@@ -318,7 +360,7 @@ require("lazy").setup({
     -- selection
     {
       "gcmt/wildfire.vim",
-      event = "VeryLazy",
+      event = { "BufReadPre", "BufNewFile" },
       config = function()
         vim.g.wildfire_objects = { "iw", "i'", 'i"', "i)", "i]", "i}", "ip", "it" }
       end
@@ -327,10 +369,10 @@ require("lazy").setup({
 
   -- syntax (treesitter)
   {
-    -- { "nvim-treesitter/playground", event = "VeryLazy" },
+    -- { "nvim-treesitter/playground", event = {"BufReadPre", "BufNewFile"} },
     {
       "nvim-treesitter/nvim-treesitter",
-      lazy = false,
+      event = { "BufReadPre", "BufNewFile" },
       priority = 1000,
       build = ":TSUpdate",
       opts = {
@@ -367,7 +409,7 @@ require("lazy").setup({
   {
     {
       "neovim/nvim-lspconfig",
-      event = "VeryLazy",
+      event = { "BufReadPre", "BufNewFile" },
       config = function()
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
         local util = require "lspconfig/util"
@@ -443,7 +485,8 @@ require("lazy").setup({
     },
     {
       "williamboman/mason.nvim",
-      event = "VeryLazy",
+      event = { "BufReadPre", "BufNewFile" },
+      cmd = { "Mason" },
       build = ":MasonUpdate", -- :MasonUpdate updates registry contents
       config = function()
         require("mason").setup({
@@ -459,16 +502,21 @@ require("lazy").setup({
     },
     {
       "williamboman/mason-lspconfig.nvim", -- a bridge between mason.nvim and lspconfig
-      event = "VeryLazy",
+      event = { "BufReadPre", "BufNewFile" },
       dependencies = { "neovim/nvim-lspconfig", },
       config = function()
         require("mason-lspconfig").setup({
           ensure_installed = {
             "gopls",         -- golang
+            "jqls",          -- json
             "lua_ls",        -- lua
             "marksman",      -- markdown
             "pyright",       -- python
             "rust_analyzer", -- rust
+            "sqlls",         -- sql
+            "tsserver",      -- ts
+            "typst_lsp",     -- typst
+            "yamlls",        -- yaml
           },
           automatic_installation = true,
         })
@@ -653,7 +701,7 @@ require("lazy").setup({
   -- snippets
   {
     "L3MON4D3/LuaSnip",
-    event = "VeryLazy",
+    event = "InsertEnter",
     version = "v2.*",
     config = function()
       local ls = require("luasnip")
@@ -691,7 +739,23 @@ require("lazy").setup({
 
   -- navigation
   {
-    { "christoomey/vim-tmux-navigator", event = "VeryLazy" },
+    {
+      "christoomey/vim-tmux-navigator",
+      cmd = {
+        "TmuxNavigateLeft",
+        "TmuxNavigateDown",
+        "TmuxNavigateUp",
+        "TmuxNavigateRight",
+        "TmuxNavigatePrevious",
+      },
+      keys = {
+        { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
+        { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
+        { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
+        { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+        { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+      },
+    },
 
     {
       "nvim-telescope/telescope.nvim",
@@ -708,11 +772,13 @@ require("lazy").setup({
           end
         },
       },
+      cmd = "Telescope",
       keys = {
         { "<leader>ff", "<cmd>Telescope find_files<cr>" },
         { "<leader>fg", "<cmd>Telescope live_grep<cr>" },
         { "<leader>fb", "<cmd>Telescope buffers<cr>" },
         { "<leader>fh", "<cmd>Telescope help_tags<cr>" },
+        { "<leader>fc", "<cmd>Telescope commands<cr>" },
 
         { "<leader>sf", "<cmd>Telescope live_grep<cr>" },
         { "<leader>bb", "<cmd>Telescope buffers<cr>" },
@@ -756,7 +822,20 @@ require("lazy").setup({
           },
         })
       end
-    }
+    },
+
+    -- motion, leap, etc
+    {
+      "folke/flash.nvim",
+      opts = {},
+      keys = {
+        { "ff",    mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+        { "ft",    mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+        { "fr",    mode = { "o" },           function() require("flash").remote() end,            desc = "Remote Flash" },
+        { "st",    mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+        { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+      },
+    },
   },
   -- explorer
   {
