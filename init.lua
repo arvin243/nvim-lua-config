@@ -271,12 +271,12 @@ require("lazy").setup({
 
   -- editing
   {
-    { "tpope/vim-repeat",   event = { "BufReadPre", "BufNewFile" } },
-    { "tpope/vim-surround", event = { "BufReadPre", "BufNewFile" } },
-    { 'tpope/vim-sleuth',   event = { "BufReadPre", "BufNewFile" } }, -- auto tab/indent
-    { "tpope/vim-abolish",  event = "VeryLazy" },                     -- change case, etc
+    { "tpope/vim-repeat" },
+    { "tpope/vim-surround" },
+    { "tpope/vim-abolish" },         -- change case, etc
+    { 'tpope/vim-sleuth' },          -- auto tab/indent
     {
-      "andrewradev/inline_edit.vim",                                  -- narrow region
+      "andrewradev/inline_edit.vim", -- narrow region
       keys = { { "<leader>nr", "<cmd>InlineEdit<cr>", mode = "v" } },
       config = function()
         vim.g.inline_edit_autowrite = 1
@@ -311,6 +311,10 @@ require("lazy").setup({
           }
         })
       end
+    },
+    {
+      "tani/dmacro.vim",
+      keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } },
     },
 
     -- format
