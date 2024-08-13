@@ -243,7 +243,7 @@ require("lazy").setup({
     -- signs
     {
       "lewis6991/gitsigns.nvim",
-      event = "InsertEnter",
+      event = "VeryLazy",
       config = function()
         require("gitsigns").setup({
           signs = {
@@ -273,6 +273,7 @@ require("lazy").setup({
   {
     { "tpope/vim-repeat" },
     { "tpope/vim-surround" },
+    -- { "kylechui/nvim-surround", event = "VeryLazy", config = function() require("nvim-surround").setup({}) end },
     { "tpope/vim-abolish" },         -- change case, etc
     { 'tpope/vim-sleuth' },          -- auto tab/indent
     {
@@ -283,10 +284,41 @@ require("lazy").setup({
       end
     },
     -- auto increment, vis & visincr
-    { "vim-scripts/vis",         cmd = { "B", "S" } },
-    { "vim-scripts/VisIncr",     cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
-    { "windwp/nvim-autopairs",   event = "InsertEnter" },
-    { "vim-scripts/swapcol.vim", cmd = { "Swapcols" } },
+    { "vim-scripts/vis",     cmd = { "B", "S" } },
+    { "vim-scripts/VisIncr", cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
+    {
+      "monaqa/dial.nvim",
+      events = "VeryLazy",
+      keys = {
+        { "<c-a>", mode = { "n", "v" }, "<Plug>(dial-increment)" },
+        { "<c-x>", mode = { "n", "v" }, "<Plug>(dial-decrement)" }, },
+      config = function()
+        local augend = require("dial.augend")
+        local weekdays = augend.constant.new({
+          elements = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", },
+          word = true,
+          cyclic = true,
+        })
+        require("dial.config").augends:register_group {
+          default = {
+            augend.integer.alias.decimal,
+            augend.constant.alias.bool,
+            augend.date.alias["%Y/%m/%d"],
+            weekdays,
+          }
+        }
+      end
+    },
+    {
+      "windwp/nvim-autopairs",
+      event = "InsertEnter",
+      config = function()
+        require('nvim-autopairs').setup({
+          disable_filetype = { "TelescopePrompt", "vim" },
+        })
+      end
+    },
+    { "vim-scripts/swapcol.vim",    cmd = { "Swapcols" } },
 
     -- comment
     -- {"scrooloose/nerdcommenter", event = { "BufReadPre", "BufNewFile" } },
@@ -363,11 +395,12 @@ require("lazy").setup({
 
     -- selection
     {
-      "gcmt/wildfire.vim",
+      "sustech-data/wildfire.nvim",
       event = { "BufReadPre", "BufNewFile" },
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
       config = function()
-        vim.g.wildfire_objects = { "iw", "i'", 'i"', "i)", "i]", "i}", "ip", "it" }
-      end
+        require("wildfire").setup()
+      end,
     },
   },
 
@@ -934,7 +967,7 @@ vim.api.nvim_exec([[
     :set ft=markdown
     :v/SPPC/d
     :%s/\(SPPC-\d\{5\}\)\s*\nSPPC-\d\{5\}\s*/[[\1](https:\/\/jira.shopee.io\/browse\/\1)] /
-    :%norm A
+    :%s/$/  /
   endfunc
 ]], true)
 
