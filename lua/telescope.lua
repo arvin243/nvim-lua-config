@@ -27,9 +27,9 @@ return {
     { "gr",         "<cmd>Telescope lsp_references<cr>" },
     { "gb",         "<cmd>Telescope git_branches<cr>" },
   },
-  config = function()
+  opts = function()
     local actions = require("telescope.actions")
-    require("telescope").setup({
+    return {
       defaults = {
         vimgrep_arguments = {
           "rg",
@@ -56,6 +56,6 @@ return {
           mappings = { i = { ["<c-d>"] = actions.delete_buffer, }, }
         },
       },
-    })
-  end
+    }
+  end,
 }
