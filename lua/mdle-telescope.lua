@@ -4,22 +4,30 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     {
-      "nvim-telescope/telescope-fzf-native.nvim",
-      "nvim-tree/nvim-web-devicons",
-      dependencies = { "junegunn/fzf.vim" },
-      build = "make",
-      config = function()
-        require("telescope").load_extension("fzf")
-      end
+      { "nvim-telescope/telescope-fzf-native.nvim", },
+      {
+        "nvim-tree/nvim-web-devicons",
+        dependencies = { "junegunn/fzf.vim" },
+        build = "make",
+        config = function()
+          require("telescope").load_extension("fzf")
+        end
+      },
     },
   },
   cmd = "Telescope",
   keys = {
     { "<leader>ff", "<cmd>Telescope find_files<cr>" },
     { "<leader>fg", "<cmd>Telescope live_grep<cr>" },
+
     { "<leader>fb", "<cmd>Telescope buffers<cr>" },
     { "<leader>fh", "<cmd>Telescope help_tags<cr>" },
     { "<leader>fc", "<cmd>Telescope commands<cr>" },
+    { "<leader>fo", "<cmd>Telescope oldfiles<cr>" },
+    { "<leader>fr", "<cmd>Telescope registers<cr>" },
+    { "<leader>ft", "<cmd>Telescope filetypes<cr>" },
+    { "<leader>fm", "<cmd>Telescope marks<cr>" },
+
     { "<leader>sf", "<cmd>Telescope live_grep<cr>" },
     { "<leader>bb", "<cmd>Telescope buffers<cr>" },
     { "<leader>dd", "<cmd>Telescope diagnostics<cr>" },
@@ -28,6 +36,7 @@ return {
     { "gb",         "<cmd>Telescope git_branches<cr>" },
   },
   opts = function()
+    vim.g.lazyvim_picker = "telescope"
     local actions = require("telescope.actions")
     return {
       defaults = {

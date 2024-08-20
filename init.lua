@@ -114,7 +114,7 @@ keymap.set("n", "[b", ":bprevious<CR>")
 keymap.set("n", "]b", ":bnext<CR>")
 
 keymap.set("v", "Y", '"+y')
-keymap.set("n", "<leader>ft", ":set ft=")
+-- keymap.set("n", "<leader>ft", ":set ft=")
 
 -- command mode and insert mode emacs-style {
 keymap.set("c", "<c-b>", "<left>")
@@ -168,13 +168,28 @@ if not vim.loop.fs_stat(lazypath) then
     "clone",
     "--filter=blob:none",
     "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    "--branch=stable",
     lazypath,
   })
 end
 opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- { "folke/lazy.nvim", version = false },
+  -- { "LazyVim/LazyVim", version = false },
+
+  require("mdle-completion"),
+  require("mdle-telescope"),
+  require("mdle-lsp"),
+  require("mdle-treesitter"),
+  require("mdle-explorer"),
+  require("mdle-language"),
+
+  require("mdle-copilot"),
+  require("mdle-comment"),
+  require("mdle-snippet"),
+  require("mdle-navigation"),
+
   -- decoration
   {
     -- theme
@@ -278,7 +293,7 @@ require("lazy").setup({
     { 'tpope/vim-sleuth' },          -- auto tab/indent
     {
       "andrewradev/inline_edit.vim", -- narrow region
-      keys = { { "<leader>nr", "<cmd>InlineEdit<cr>", mode = "v" } },
+      keys = { { "<leader>nr", mode = "v", "<cmd>InlineEdit<cr>" } },
       config = function()
         vim.g.inline_edit_autowrite = 1
       end
@@ -319,31 +334,6 @@ require("lazy").setup({
       end
     },
     { "vim-scripts/swapcol.vim",    cmd = { "Swapcols" } },
-
-    -- comment
-    -- {"scrooloose/nerdcommenter", event = { "BufReadPre", "BufNewFile" } },
-    {
-      "numToStr/Comment.nvim",
-      keys = { "<leader>cc", "<leader>bc" },
-      config = function()
-        require("Comment").setup({
-          -- Add a space b/w comment and the line
-          padding = true,
-          -- Whether the cursor should stay at its position
-          sticky = true,
-          toggler = {
-            ---Line-comment toggle keymap
-            line = ',cc',
-            ---Block-comment toggle keymap
-            block = ',bc',
-          },
-          mappings = {
-            basic = true,
-            extra = false,
-          }
-        })
-      end
-    },
     {
       "tani/dmacro.vim",
       keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } },
@@ -404,13 +394,7 @@ require("lazy").setup({
     },
   },
 
-  -- syntax (treesitter)
-  require("treesitter"),
-
   -- {"p00f/nvim-ts-rainbow",}, -- rainbow bracket
-
-  -- lsp
-  require("lsp"),
 
   -- diagnostics, references, etc
   {
@@ -418,237 +402,12 @@ require("lazy").setup({
     opts = {}, -- for default options, refer to the configuration section for custom setup.
     cmd = "Trouble",
     keys = {
-      {
-        "<leader>xx",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
-      },
-      {
-        "<leader>xX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
-      {
-        "<leader>cs",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>cl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>xL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>xQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
-      },
-    },
-  },
-  -- golang
-  {
-    "ray-x/go.nvim",
-    ft = { "go", "gomod", "gowork", "gotmpl" },
-    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
-    dependencies = {
-      "ray-x/guihua.lua",
-      "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
-      "hrsh7th/nvim-cmp",
-    },
-    config = function()
-      -- local lsp = require("plugins.lsp")
-      require("go").setup({
-        go = "go",
-        goimports = "gopls",
-        gofmt = "gofumpt",
-        fillstruct = "gopls",
-        -- max_line_len = 256,
-
-        lsp_cfg = true,
-        -- lsp_on_attach = lsp.on_attach,
-        lsp_gofumpt = true,
-        lsp_codelens = true,
-        lsp_inlay_hints = { enable = false },
-
-        luasnip = true,
-      })
-
-      -- snippet
-      local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      require("go").setup({
-        -- other setups ....
-        lsp_cfg = {
-          capabilities = capabilities,
-          -- other setups
-        },
-      })
-
-      -- -- use format from lsp
-      -- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-      -- vim.api.nvim_create_autocmd("BufWritePre", {
-      --   pattern = "*.go",
-      --   callback = function()
-      --     require("go.format").goimport()
-      --   end,
-      --   group = format_sync_grp,
-      -- })
-    end,
-  },
-
-  require("completion"),
-
-  -- snippets
-  {
-    "L3MON4D3/LuaSnip",
-    event = "InsertEnter",
-    version = "v2.*",
-    config = function()
-      local ls = require("luasnip")
-      local lssnip = ls.snippet
-      local lsfunc = ls.function_node
-
-      ls.add_snippets("all", {
-        lssnip("dt", lsfunc(function() return os.date("%Y-%m-%d") end, {})),
-        lssnip("ts10", lsfunc(function() return tostring(os.time()) end, {})),
-        lssnip("ts13", lsfunc(function() return tostring(os.time() * 1000) end, {})),
-      })
-    end
-  },
-
-  -- copilot
-  {
-    "github/copilot.vim",
-    -- branch = "release",
-    event = "InsertEnter",
-    config = function()
-      vim.g.copilot_enabled = true
-      vim.g.copilot_assume_mapped = true
-      vim.g.copilot_no_tab_map = true
-      -- vim.api.nvim_set_keymap("i", "<c-p>", "<Plug>(copilot-suggest)", {})
-      -- vim.api.nvim_set_keymap("i", "<c-n>", "<Plug>(copilot-next)", { silent = true })
-      -- vim.api.nvim_set_keymap("i", "<c-l>", "<Plug>(copilot-previous)", { silent = true })
-      vim.cmd('imap <silent><script><expr> <C-J> copilot#Accept("")')
-      vim.cmd([[
-        let g:copilot_filetypes = {
-        \ "TelescopePrompt": v:false,
-        \ }
-        ]])
-    end
-  },
-
-  -- navigation
-  {
-    {
-      "christoomey/vim-tmux-navigator",
-      cmd = {
-        "TmuxNavigateLeft",
-        "TmuxNavigateDown",
-        "TmuxNavigateUp",
-        "TmuxNavigateRight",
-        "TmuxNavigatePrevious",
-      },
-      keys = {
-        { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
-        { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
-        { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
-        { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
-        { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-      },
-    },
-
-    require("telescope"),
-
-    -- motion, leap, etc
-    {
-      "folke/flash.nvim",
-      opts = {},
-      keys = {
-        { "ff",    mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
-        { "ft",    mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-        { "fr",    mode = { "o" },           function() require("flash").remote() end,            desc = "Remote Flash" },
-        { "st",    mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-        { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
-      },
-    },
-  },
-  -- explorer
-  {
-    "nvim-tree/nvim-tree.lua",
-    keys = { { "<leader>ee", "<cmd>NvimTreeToggle<cr>" } },
-    dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
-    config = function()
-      require("nvim-tree").setup({
-        auto_reload_on_write = true,
-        update_focused_file = { enable = true },
-        diagnostics = { enable = false, },
-        actions = {
-          open_file = { quit_on_open = true, },
-        },
-        update_cwd = true,
-      })
-      vim.cmd([[doautocmd NvimTree BufEnter *]])
-    end
-  },
-  -- languages
-  {
-    {
-      "iamcco/markdown-preview.nvim",
-      ft = "markdown",
-      build = function() vim.fn["mkdp#util#install"]() end,
-      config = function()
-        local g = vim.g
-        g.mkdp_auto_start = 0
-        g.mkdp_auto_close = 1
-        g.mkdp_refresh_slow = 0
-        g.mkdp_command_for_global = 0
-        g.mkdp_open_to_the_world = 0
-        g.mkdp_open_ip = ''
-        g.mkdp_echo_preview_url = 0
-        g.mkdp_browserfunc = ''
-        g.mkdp_markdown_css = ''
-        g.mkdp_highlight_css = ''
-        g.mkdp_port = ''
-        g.mkdp_page_title = "「${name}」"
-        g.mkdp_preview_options = {
-          disable_sync_scroll = 0,
-          sync_scroll_type = "middle",
-          hide_yaml_meta = 1,
-        }
-      end
-    },
-    {
-      "chomosuke/typst-preview.nvim",
-      ft = "typst",
-      version = "0.1.*",
-      build = function() require "typst-preview".update() end,
-    },
-    {
-      "scalameta/nvim-metals",
-      ft = { "scala" },
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "mfussenegger/nvim-dap",
-      },
-      config = function()
-        local metals_config = require("metals").bare_config()
-
-        -- Example of settings
-        metals_config.settings = {
-          showImplicitArguments = true,
-          excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
-        }
-        metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
-      end
-    },
-    {
-      "jceb/vim-orgmode",
-      ft = { "org" },
+      { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)", },
+      { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Buffer Diagnostics (Trouble)", },
+      { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Symbols (Trouble)", },
+      { "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)", },
+      { "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)", },
+      { "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)", },
     },
   },
 

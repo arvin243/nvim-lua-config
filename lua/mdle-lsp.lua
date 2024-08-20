@@ -61,7 +61,7 @@ return {
       keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
       keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
       keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-      keymap.set("n", "gr", vim.lsp.buf.references, opts)
+      -- keymap.set("n", "gr", vim.lsp.buf.references, opts)
       keymap.set("n", "K", vim.lsp.buf.hover, opts)
       keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
       keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
@@ -79,7 +79,7 @@ return {
   {
     "williamboman/mason.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    cmd = { "Mason" },
+    cmd = { "Mason", "MasonUpdate" },
     build = ":MasonUpdate", -- :MasonUpdate updates registry contents
     config = function()
       require("mason").setup({
