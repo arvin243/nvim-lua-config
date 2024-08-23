@@ -439,10 +439,10 @@ func! RunVimRun()
   if &filetype == 'sh'
     :!time bash %
   elseif &filetype == 'go'
-    " :GoRun
-    set splitbelow
-    :sp
-    :term go run %
+    :GoRun %
+    " set splitbelow
+    " :sp
+    " :term go run %
   elseif &filetype == 'python'
     set splitbelow
     :sp
