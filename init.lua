@@ -92,7 +92,7 @@ opt.undofile         = false;
 
 -- faster scroll
 opt.ttyfast          = true;
-opt.lazyredraw       = true;
+opt.lazyredraw       = false; -- avoid issue in noice
 
 -- window local
 vim.wo.wrap          = false;
@@ -103,7 +103,6 @@ vim.wo.wrap          = false;
 
 vim.g.mapleader      = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
 vim.g.localmapleader = ","
-local bufopts        = { silent = true, noremap = true }
 
 keymap.set("n", "<esc>", ":nohl<CR>")
 keymap.set("n", "Q", "<nop>")
@@ -198,6 +197,35 @@ require("lazy").setup({
       desc = "Buffer Local Keymaps (which-key)",
     } },
   },
+  -- wilder
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {},
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+      "hrsh7th/nvim-cmp",
+    },
+    config = function()
+      require("noice").setup({
+        lsp = {
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true, -- requires nvim-cmp
+          },
+        },
+        presets = {
+          bottom_search = false,        -- use a classic bottom cmdline for search
+          command_palette = true,       -- position the cmdline and popupmenu together
+          long_message_to_split = true, -- long messages will be sent to a split
+          inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border = false,       -- add a border to hover docs and signature help
+        },
+      })
+    end,
+  },
 
   -- editing
   {
@@ -214,8 +242,11 @@ require("lazy").setup({
       end
     },
     -- auto increment, vis & visincr
-    { "vim-scripts/vis",     cmd = { "B", "S" } },
-    { "vim-scripts/VisIncr", cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
+    { "vim-scripts/vis",         cmd = { "B", "S" } },
+    { "vim-scripts/VisIncr",     cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
+
+    { "vim-scripts/swapcol.vim", cmd = { "Swapcols" } },
+    { "tani/dmacro.vim",         keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } }, },
     {
       "monaqa/dial.nvim",
       events = "VeryLazy",
@@ -247,11 +278,6 @@ require("lazy").setup({
           disable_filetype = { "TelescopePrompt", "vim" },
         })
       end
-    },
-    { "vim-scripts/swapcol.vim",    cmd = { "Swapcols" } },
-    {
-      "tani/dmacro.vim",
-      keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } },
     },
 
     -- format
