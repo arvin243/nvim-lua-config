@@ -175,8 +175,6 @@ end
 opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- { "folke/lazy.nvim", version = false },
-  -- { "LazyVim/LazyVim", version = false },
 
   require("pl-completion"),
   require("pl-telescope"),
@@ -188,89 +186,7 @@ require("lazy").setup({
   require("pl-comment"),
   require("pl-snippet"),
   require("pl-navigation"),
-
-  -- decoration
-  {
-    -- theme
-    {
-      -- "srcery-colors/srcery-vim",
-      "morhetz/gruvbox",
-      lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-      priority = 1000, -- make sure to load this before all the other start plugins
-      config = function()
-        -- load the colorscheme here
-        vim.g.gruvbox_contrast_dark = "hard"
-        vim.cmd([[colorscheme gruvbox]])
-      end
-    },
-
-    -- status bar
-    {
-      "nvim-lualine/lualine.nvim",
-      dependencies = { "nvim-tree/nvim-web-devicons" },
-      config = function()
-        require("lualine").setup({
-          options = { theme = "gruvbox" },
-        })
-      end
-    },
-
-    -- welcome
-    {
-      "mhinz/vim-startify",
-      config = function()
-        vim.g.startify_change_to_dir = 0
-        vim.g.startify_change_to_vcs_root = 1
-        vim.g.startify_files_number = 20
-        -- vim.g.startify_session_dir = "$HOME/.config/nvim/"
-      end
-    },
-    -- {
-    --   "nvimdev/dashboard-nvim",
-    --   event = "UIEnter",
-    --   config = function()
-    --     require('dashboard').setup {
-    --       theme = "hyper",
-    --       shortcut_type = "number",
-    --       change_to_vcs_root = true,
-    --       config = {
-    --         -- week_header = { enable = true },
-    --         mru = { limit = 10, icon = 'MRU', label = '', cwd_only = false },
-    --         project = { enable = true, limit = 10, icon = 'Proj', label = '', action = 'Telescope find_files cwd=' },
-    --         shortcut = {
-    --           { desc = 'LazyUpdate', group = 'Include',  action = 'Lazy update',          key = 'u', },
-    --           { desc = 'Mason',      group = 'Include',  action = 'Mason',                key = 'm', },
-    --           { desc = 'Files',      group = 'Function', action = 'Telescope find_files', key = 'f', },
-    --           { desc = 'Grep',       group = 'Function', action = 'Telescope live_grep',  key = 'g', },
-    --         },
-    --       },
-    --     }
-    --   end,
-    --   dependencies = {
-    --     'nvim-tree/nvim-web-devicons',
-    --     "nvim-telescope/telescope.nvim",
-    --   },
-    -- },
-
-    -- { "echasnovski/mini.nvim", version = false },
-
-    -- signs
-    {
-      "lewis6991/gitsigns.nvim",
-      event = "VeryLazy",
-      config = function()
-        require("gitsigns").setup({
-          signs = {
-            add = { text = "+" },
-            change = { text = "~" },
-            delete = { text = "_" },
-            topdelete = { text = "‾" },
-            changedelete = { text = "~" },
-          },
-        })
-      end
-    },
-  },
+  require("pl-ornament"),
 
   -- keybinding & command
   {
@@ -419,68 +335,5 @@ require("lazy").setup({
 
 -- end of lazy plugins
 
---
--- custom funcs
---
-
-vim.api.nvim_exec([[
-  command! TidyJIRA call TidyJIRAFunc()
-  function! TidyJIRAFunc()
-    :set ft=markdown
-    :v/SPPC/d
-    :%s/\(SPPC-\d\{5\}\)\s*\nSPPC-\d\{5\}\s*/[[\1](https:\/\/jira.shopee.io\/browse\/\1)] /
-    :%s/$/  /
-  endfunc
-]], true)
-
-vim.api.nvim_exec([[
-func! RunVimRun()
-  :w
-  if &filetype == 'sh'
-    :!time bash %
-  elseif &filetype == 'go'
-    :GoRun %
-    " set splitbelow
-    " :sp
-    " :term go run %
-  elseif &filetype == 'python'
-    set splitbelow
-    :sp
-    :term python3 %
-  elseif &filetype == 'markdown'
-    exec "MarkdownPreview"
-  elseif &filetype == 'typst'
-    exec "TypstPreview"
-  elseif &filetype == 'xhtml'
-    :!open % -a Google\ Chrome
-  elseif &filetype == 'dot'
-    let current_file_name=expand('%:r')
-    let output_file_path=current_file_name . '.png'
-    exec "!dot -Tpng % -o " . output_file_path
-    exec "!open " . output_file_path
-  elseif &filetype == 'mermaid'
-    " let current_file_name=expand('%:r')
-    " let output_file_path=current_file_name . '.png'
-    " exec "!mmdc -H -i " . current_file_name . ".mmd -o " output_file_path . " -t bright -b transparent"
-    " exec "!open " . output_file_path
-    exec "!mermaid %"
-  elseif &filetype == 'scala'
-    set splitbelow
-    :sp
-    :term scala %
-  endif
-endfunc
-]], true)
-
-vim.api.nvim_exec([[
-func! RunVimTest()
-  :w
-  if &filetype == 'sh'
-    :!time bash %
-  elseif &filetype == 'go'
-    :GoTestFile -v
-  endif
-endfunc
-]], true)
-
+require("custom-fn")
 require("neovide")
