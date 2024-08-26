@@ -181,7 +181,6 @@ require("lazy").setup({
   require("mdle-completion"),
   require("mdle-telescope"),
   require("mdle-lsp"),
-  require("mdle-treesitter"),
   require("mdle-explorer"),
   require("mdle-language"),
 
@@ -368,6 +367,7 @@ require("lazy").setup({
     -- information
     { "RRethy/vim-illuminate",           keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } }, },
     { "bronson/vim-trailing-whitespace", event = { "BufReadPre", "BufNewFile" } },
+    { "kevinhwang91/nvim-bqf",           ft = "qf" },
 
     -- splitjoin
     {
