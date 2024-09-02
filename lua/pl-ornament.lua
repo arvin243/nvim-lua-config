@@ -8,7 +8,11 @@ return {
     config = function()
       -- load the colorscheme here
       vim.g.gruvbox_contrast_dark = "hard"
-      vim.cmd([[colorscheme gruvbox]])
+      vim.g.gruvbox_transparent_bg = "1"
+      vim.cmd([[
+        colorscheme gruvbox
+        highlight Normal guibg=None ctermbg=None
+      ]])
     end
   },
 
