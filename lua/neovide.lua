@@ -8,6 +8,8 @@ if vim.g.neovide then
   vim.g.neovide_cursor_antialiasing     = false
   vim.g.neovide_cursor_vfx_mode         = "torpedo"
 
+
+  local keymap = vim.keymap
   keymap.set('n', '<D-s>', ':w<CR>')      -- Save
   keymap.set('v', '<D-c>', '"+y')         -- Copy
   keymap.set('n', '<D-v>', '"+P')         -- Paste normal mode
