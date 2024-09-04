@@ -1,5 +1,5 @@
 return {
-  -- motion, leap, etc
+  -- motion, leap, hop, or something like that
   {
     "folke/flash.nvim",
     opts = {},
@@ -15,15 +15,11 @@ return {
     "christoomey/vim-tmux-navigator",
     cmd = { "TmuxNavigatePrevious", "TmuxNavigateLeft", "TmuxNavigateDown", "TmuxNavigateUp", "TmuxNavigateRight", },
     keys = {
-      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
-      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
     },
   },
-  {
-    "nacro90/numb.nvim",
-    config = function() require("numb").setup() end,
-  },
+  { "nacro90/numb.nvim", config = function() require("numb").setup() end },
 }

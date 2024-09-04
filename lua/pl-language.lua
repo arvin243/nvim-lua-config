@@ -30,7 +30,11 @@ return {
         extended_mode = true,
         max_file_lines = nil,
       },
+
     },
+    config = function()
+      require('nvim-treesitter.install').compilers = { 'gcc' }
+    end,
   },
   {
     "ray-x/go.nvim",
