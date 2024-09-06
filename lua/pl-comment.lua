@@ -2,23 +2,17 @@ return {
   -- {"scrooloose/nerdcommenter", event = { "BufReadPre", "BufNewFile" } },
   {
     "numToStr/Comment.nvim",
-    keys = { "<leader>cc", "<leader>bc" },
+    keys = {
+      { "<leader>cc", mode = { "n", "v" } },
+      { "<leader>bc", mode = { "n", "v" } },
+    },
     config = function()
       require("Comment").setup({
-        -- Add a space b/w comment and the line
-        padding = true,
-        -- Whether the cursor should stay at its position
-        sticky = true,
-        toggler = {
-          ---Line-comment toggle keymap
-          line = ',cc',
-          ---Block-comment toggle keymap
-          block = ',bc',
-        },
-        mappings = {
-          basic = true,
-          extra = false,
-        }
+        padding = true, -- Add a space b/w comment and the line
+        sticky = true,  -- Whether the cursor should stay at its position
+        toggler = { line = '<leader>cc', block = '<leader>bc', },
+        opleader = { line = '<leader>cc', block = '<leader>bc', },
+        mappings = { basic = true, extra = false, }
       })
     end
   }

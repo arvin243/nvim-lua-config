@@ -49,7 +49,6 @@ return {
     config = function()
       -- local lsp = require("plugins.lsp")
       require("go").setup({
-        go = "go",
         goimports = "gopls",
         gofmt = "gofumpt",
         fillstruct = "gopls",
@@ -59,9 +58,23 @@ return {
         -- lsp_on_attach = lsp.on_attach,
         lsp_gofumpt = true,
         lsp_codelens = true,
-        lsp_inlay_hints = { enable = false },
+        lsp_inlay_hints = {
+          enable = true,
+          style = 'eol',
+          only_current_line = true,
+          only_current_line_autocmd = "CursorHold",
+          show_variable_name = true,
+          parameter_hints_prefix = "󰊕 ",
+          show_parameter_hints = true,
+          other_hints_prefix = "=> ",
+          max_len_align = false,
+          max_len_align_padding = 1,
+          right_align = false,
+          right_align_padding = 6,
+          highlight = "Comment",
+        },
 
-        luasnip = true,
+        -- luasnip = true,
       })
 
       -- snippet

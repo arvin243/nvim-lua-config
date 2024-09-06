@@ -3,7 +3,7 @@ return {
   {
     -- "srcery-colors/srcery-vim",
     "morhetz/gruvbox",
-    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+    lazy = false,  -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- load the colorscheme here
@@ -13,7 +13,7 @@ return {
         colorscheme gruvbox
         highlight Normal guibg=None ctermbg=None
       ]])
-    end
+    end,
   },
 
   -- status bar
@@ -24,7 +24,7 @@ return {
       require("lualine").setup({
         options = { theme = "gruvbox" },
       })
-    end
+    end,
   },
 
   -- { "echasnovski/mini.nvim", version = false },
@@ -43,7 +43,7 @@ return {
           changedelete = { text = "~" },
         },
       })
-    end
+    end,
   },
 
   -- welcome
@@ -52,9 +52,9 @@ return {
     config = function()
       vim.g.startify_change_to_dir = 0
       vim.g.startify_change_to_vcs_root = 1
-      vim.g.startify_files_number = 20
+      vim.g.startify_files_number = 15
       -- vim.g.startify_session_dir = "$HOME/.config/nvim/"
-    end
+    end,
   },
   -- {
   --   "nvimdev/dashboard-nvim",
