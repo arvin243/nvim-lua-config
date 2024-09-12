@@ -201,57 +201,53 @@ require("lazy").setup({
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
-		opts = {},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			{
-				"rcarriga/nvim-notify",
-				config = function()
-					require("notify").setup({ background_colour = "#000000" })
-				end,
-			},
+			{ "rcarriga/nvim-notify", opts = { background_colour = "#000000" } },
 			"hrsh7th/nvim-cmp",
 		},
-		config = function()
-			require("noice").setup({
-				lsp = {
-					override = {
-						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-						["vim.lsp.util.stylize_markdown"] = true,
-						["cmp.entry.get_documentation"] = true, -- requires nvim-cmp
-					},
+		opts = {
+			lsp = {
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+					["cmp.entry.get_documentation"] = true, -- requires nvim-cmp
 				},
-				presets = {
-					bottom_search = false, -- use a classic bottom cmdline for search
-					command_palette = true, -- position the cmdline and popupmenu together
-					long_message_to_split = true, -- long messages will be sent to a split
-					inc_rename = false, -- enables an input dialog for inc-rename.nvim
-					lsp_doc_border = false, -- add a border to hover docs and signature help
-				},
-			})
-		end,
+			},
+			presets = {
+				bottom_search = false,    -- use a classic bottom cmdline for search
+				command_palette = true,   -- position the cmdline and popupmenu together
+				long_message_to_split = true, -- long messages will be sent to a split
+				inc_rename = false,       -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false,   -- add a border to hover docs and signature help
+			},
+		},
 	},
 
 	-- editing
 	{
 		{ "tpope/vim-repeat" },
 		{ "tpope/vim-surround" },
-		-- { "kylechui/nvim-surround", event = "VeryLazy", config = function() require("nvim-surround").setup({}) end },
+		-- { "kylechui/nvim-surround", event = "VeryLazy" },
 		{ "tpope/vim-abolish" }, -- change case, etc
 		{ "tpope/vim-sleuth" }, -- auto tab/indent
+		-- git
+		{ "tpope/vim-fugitive", event = { "BufReadPre", "BufNewFile" } },
+
+		-- narrow region
 		{
-			"andrewradev/inline_edit.vim", -- narrow region
+			"andrewradev/inline_edit.vim",
 			keys = { { "<leader>nr", mode = "v", "<cmd>InlineEdit<cr>" } },
 			config = function()
 				vim.g.inline_edit_autowrite = 1
 			end,
 		},
 		-- auto increment, vis & visincr
-		{ "vim-scripts/vis", cmd = { "B", "S" } },
-		{ "vim-scripts/VisIncr", cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
+		{ "vim-scripts/vis",         cmd = { "B", "S" } },
+		{ "vim-scripts/VisIncr",     cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
 
 		{ "vim-scripts/swapcol.vim", cmd = { "Swapcols" } },
-		{ "tani/dmacro.vim", keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } } },
+		{ "tani/dmacro.vim",         keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } } },
 		{
 			"monaqa/dial.nvim",
 			events = "VeryLazy",
@@ -279,11 +275,7 @@ require("lazy").setup({
 		{
 			"windwp/nvim-autopairs",
 			event = "InsertEnter",
-			config = function()
-				require("nvim-autopairs").setup({
-					disable_filetype = { "TelescopePrompt", "vim" },
-				})
-			end,
+			opts = { disable_filetype = { "TelescopePrompt", "vim" } },
 		},
 
 		-- format
@@ -293,7 +285,7 @@ require("lazy").setup({
 			cmd = { "TableModeToggle" },
 			keys = { { "<leader>tm", "<cmd>TableModeToggle<cr>" } },
 		},
-		{ "godlygeek/tabular", cmd = { "Tabularize" } },
+		{ "godlygeek/tabular",               cmd = { "Tabularize" } },
 		{
 			"stevearc/conform.nvim",
 			event = { "BufWritePre" },
@@ -322,26 +314,22 @@ require("lazy").setup({
 				vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 			end,
 		},
-		-- git
-		{ "tpope/vim-fugitive", event = { "BufReadPre", "BufNewFile" } },
 
 		-- information
-		{ "RRethy/vim-illuminate", keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
+		{ "RRethy/vim-illuminate",           keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
 		{ "bronson/vim-trailing-whitespace", event = { "BufReadPre", "BufNewFile" } },
-		{ "kevinhwang91/nvim-bqf", ft = "qf" },
+		{ "kevinhwang91/nvim-bqf",           ft = "qf" },
 
 		-- splitjoin
 		{
 			"Wansmer/treesj",
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
 			keys = { { "gS", "<cmd>TSJToggle<cr>" } },
-			config = function()
-				require("treesj").setup({
-					use_default_keymaps = false,
-					max_join_length = 240,
-					dot_repeat = true,
-				})
-			end,
+			opts = {
+				use_default_keymaps = false,
+				max_join_length = 240,
+				dot_repeat = true,
+			},
 		},
 
 		-- selection
@@ -349,9 +337,7 @@ require("lazy").setup({
 			"sustech-data/wildfire.nvim",
 			event = { "BufReadPre", "BufNewFile" },
 			dependencies = { "nvim-treesitter/nvim-treesitter" },
-			config = function()
-				require("wildfire").setup()
-			end,
+			opts = {},
 		},
 	},
 
@@ -360,7 +346,6 @@ require("lazy").setup({
 	-- diagnostics, references, etc
 	{
 		"folke/trouble.nvim",
-		opts = {}, -- for default options, refer to the configuration section for custom setup.
 		cmd = "Trouble",
 		keys = {
 			{
