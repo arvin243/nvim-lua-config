@@ -3,7 +3,39 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
+		keys = {
+			{ "<C-]>", vim.lsp.buf.definition },
+			{ "<leader>D", vim.lsp.buf.type_definition },
+			{ "<C-]>", vim.lsp.buf.definition }, -- gd
+			{ "gi", vim.lsp.buf.implementation }, -- gI
+			{ "<leader>rn", vim.lsp.buf.rename }, -- cr
+			-- { "<leader>do", vim.diagnostic.open_float }, -- wrong cmd
+
+			-- lazyvim already included some keys https://www.lazyvim.org/keymaps#lsp
+			-- { "gD", vim.lsp.buf.declaration },
+			-- { "gd", vim.lsp.buf.definition },
+			-- { "[d", vim.diagnostic.goto_prev },
+			-- { "]d", vim.diagnostic.goto_next },
+			-- { "gr", vim.lsp.buf.references },
+			-- { "K", vim.lsp.buf.hover },
+			-- { "<C-k>", vim.lsp.buf.signature_help },
+		},
+		opts = {
+			inlay_hints = {
+				enabled = true,
+				exclude = {},
+			},
+		},
 		config = function()
+			-- use format from conform.nvim
+
+			require("lspconfig").lua_ls.setup({
+				settings = { Lua = { diagnostics = { globals = { "vim" } } } }, -- ignore vim global in nvim config
+			})
+			require("lspconfig").marksman.setup({})
+			require("lspconfig").pyright.setup({})
+			require("lspconfig").rust_analyzer.setup({})
+
 			require("lspconfig").gopls.setup({
 				cmd = { "gopls" },
 				fieltypes = { "go", "gomod", "gowork", "gotmpl" },
@@ -32,7 +64,6 @@ return {
 					},
 				},
 			})
-
 			-- gofumpt on save
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				pattern = "*.go",
@@ -40,29 +71,6 @@ return {
 					vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
 				end,
 			})
-
-			-- See `:help vim.lsp.*` for documentation on any of the below functions
-			local opts = { silent = true }
-			-- keymap.set("n", "<leader>do", vim.diagnostic.open_float, opts) -- wrong cmd
-			keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-			keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-			keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
-			keymap.set("n", "<C-]>", vim.lsp.buf.definition, opts)
-			keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-			keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-			-- keymap.set("n", "gr", vim.lsp.buf.references, opts)
-			keymap.set("n", "K", vim.lsp.buf.hover, opts)
-			keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-			keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-			keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-
-			require("lspconfig").lua_ls.setup({
-				capabilities = require("cmp_nvim_lsp").default_capabilities(),
-				settings = { Lua = { diagnostics = { globals = { "vim" } } } }, -- ignore vim global in nvim config
-			})
-			require("lspconfig").marksman.setup({})
-			require("lspconfig").pyright.setup({})
-			require("lspconfig").rust_analyzer.setup({})
 		end,
 	},
 	{

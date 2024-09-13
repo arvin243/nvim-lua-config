@@ -189,15 +189,8 @@ require("lazy").setup({
 	{
 		"folke/which-key.nvim",
 		opts = { preset = "mordern" },
-		keys = {
-			{
-				"<leader>?",
-				function()
-					require("which-key").show({ global = false })
-				end,
-				desc = "Buffer Local Keymaps (which-key)",
-			},
-		},
+		-- stylua: ignore
+		keys = { { "<leader>?", function() require("which-key").show({ global = false }) end } },
 	},
 	-- wilder
 	{
