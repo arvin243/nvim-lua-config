@@ -206,7 +206,6 @@ require("lazy").setup({
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			{ "rcarriga/nvim-notify", opts = { background_colour = "#000000" } },
-			"hrsh7th/nvim-cmp",
 		},
 		opts = {
 			lsp = {
