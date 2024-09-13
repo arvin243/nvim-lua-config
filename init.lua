@@ -176,6 +176,8 @@ require("lazy").setup({
 	require("pl-lsp"),
 	require("pl-explorer"),
 	require("pl-language"),
+	require("pl-format"),
+	require("pl-tpope"),
 
 	require("pl-copilot"),
 	require("pl-comment"),
@@ -215,25 +217,17 @@ require("lazy").setup({
 				},
 			},
 			presets = {
-				bottom_search = false,    -- use a classic bottom cmdline for search
-				command_palette = true,   -- position the cmdline and popupmenu together
+				bottom_search = false, -- use a classic bottom cmdline for search
+				command_palette = true, -- position the cmdline and popupmenu together
 				long_message_to_split = true, -- long messages will be sent to a split
-				inc_rename = false,       -- enables an input dialog for inc-rename.nvim
-				lsp_doc_border = false,   -- add a border to hover docs and signature help
+				inc_rename = false, -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false, -- add a border to hover docs and signature help
 			},
 		},
 	},
 
 	-- editing
 	{
-		{ "tpope/vim-repeat" },
-		{ "tpope/vim-surround" },
-		-- { "kylechui/nvim-surround", event = "VeryLazy" },
-		{ "tpope/vim-abolish" }, -- change case, etc
-		{ "tpope/vim-sleuth" }, -- auto tab/indent
-		-- git
-		{ "tpope/vim-fugitive", event = { "BufReadPre", "BufNewFile" } },
-
 		-- narrow region
 		{
 			"andrewradev/inline_edit.vim",
@@ -242,12 +236,13 @@ require("lazy").setup({
 				vim.g.inline_edit_autowrite = 1
 			end,
 		},
-		-- auto increment, vis & visincr
-		{ "vim-scripts/vis",         cmd = { "B", "S" } },
-		{ "vim-scripts/VisIncr",     cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
 
 		{ "vim-scripts/swapcol.vim", cmd = { "Swapcols" } },
-		{ "tani/dmacro.vim",         keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } } },
+		{ "tani/dmacro.vim", keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } } },
+
+		-- auto increment, vis & visincr
+		{ "vim-scripts/vis", cmd = { "B", "S" } },
+		{ "vim-scripts/VisIncr", cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
 		{
 			"monaqa/dial.nvim",
 			events = "VeryLazy",
@@ -278,59 +273,10 @@ require("lazy").setup({
 			opts = { disable_filetype = { "TelescopePrompt", "vim" } },
 		},
 
-		-- format
-		-- { "nvie/vim-rst-tables",        event = {"BufReadPre", "BufNewFile"} },
-		{
-			"dhruvasagar/vim-table-mode",
-			cmd = { "TableModeToggle" },
-			keys = { { "<leader>tm", "<cmd>TableModeToggle<cr>" } },
-		},
-		{ "godlygeek/tabular",               cmd = { "Tabularize" } },
-		{
-			"stevearc/conform.nvim",
-			event = { "BufWritePre" },
-			cmd = { "ConformInfo" },
-			keys = {
-				{
-					"<leader>fm",
-					function()
-						require("conform").format({ async = true })
-					end,
-				},
-			},
-			opts = {
-				formatters_by_ft = {
-					go = { "gofumpt" },
-					javascript = { "prettierd", "prettier", stop_after_first = true },
-					lua = { "stylua" },
-					python = { "isort", "black" },
-					rust = { "rustfmt", lsp_format = "fallback" },
-				},
-				default_format_opts = { lsp_format = "fallback" },
-				format_on_save = { timeout_ms = 500 },
-				formatters = { shfmt = { prepend_args = { "-i", "2" } } },
-			},
-			init = function()
-				vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-			end,
-		},
-
 		-- information
-		{ "RRethy/vim-illuminate",           keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
+		{ "RRethy/vim-illuminate", keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
 		{ "bronson/vim-trailing-whitespace", event = { "BufReadPre", "BufNewFile" } },
-		{ "kevinhwang91/nvim-bqf",           ft = "qf" },
-
-		-- splitjoin
-		{
-			"Wansmer/treesj",
-			dependencies = { "nvim-treesitter/nvim-treesitter" },
-			keys = { { "gS", "<cmd>TSJToggle<cr>" } },
-			opts = {
-				use_default_keymaps = false,
-				max_join_length = 240,
-				dot_repeat = true,
-			},
-		},
+		{ "kevinhwang91/nvim-bqf", ft = "qf" },
 
 		-- selection
 		{
@@ -378,8 +324,6 @@ require("lazy").setup({
 	},
 
 	-- others
-	-- require("plugins.wilder"),
-
 	{ "sindrets/diffview.nvim", cmd = { "DiffviewOpen", "DiffviewFileHistory" } },
 })
 
