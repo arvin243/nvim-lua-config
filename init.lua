@@ -209,11 +209,11 @@ require("lazy").setup({
 				},
 			},
 			presets = {
-				bottom_search = false, -- use a classic bottom cmdline for search
-				command_palette = true, -- position the cmdline and popupmenu together
+				bottom_search = false,    -- use a classic bottom cmdline for search
+				command_palette = true,   -- position the cmdline and popupmenu together
 				long_message_to_split = true, -- long messages will be sent to a split
-				inc_rename = false, -- enables an input dialog for inc-rename.nvim
-				lsp_doc_border = false, -- add a border to hover docs and signature help
+				inc_rename = false,       -- enables an input dialog for inc-rename.nvim
+				lsp_doc_border = false,   -- add a border to hover docs and signature help
 			},
 		},
 	},
@@ -230,11 +230,11 @@ require("lazy").setup({
 		},
 
 		{ "vim-scripts/swapcol.vim", cmd = { "Swapcols" } },
-		{ "tani/dmacro.vim", keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } } },
+		{ "tani/dmacro.vim",         keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } } },
 
 		-- auto increment, vis & visincr
-		{ "vim-scripts/vis", cmd = { "B", "S" } },
-		{ "vim-scripts/VisIncr", cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
+		{ "vim-scripts/vis",         cmd = { "B", "S" } },
+		{ "vim-scripts/VisIncr",     cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
 		{
 			"monaqa/dial.nvim",
 			events = "VeryLazy",
@@ -266,9 +266,9 @@ require("lazy").setup({
 		},
 
 		-- information
-		{ "RRethy/vim-illuminate", keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
+		{ "RRethy/vim-illuminate",           keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
 		{ "bronson/vim-trailing-whitespace", event = { "BufReadPre", "BufNewFile" } },
-		{ "kevinhwang91/nvim-bqf", ft = "qf" },
+		{ "kevinhwang91/nvim-bqf",           ft = "qf" },
 
 		-- selection
 		{

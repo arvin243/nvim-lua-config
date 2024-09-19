@@ -22,7 +22,7 @@ return {
 			formatters_by_ft = {
 				go = { "gofumpt" },
 				javascript = { "prettierd", "prettier", stop_after_first = true },
-				lua = { "stylua" },
+				-- lua = { "stylua" },
 				python = { "isort", "black" },
 				rust = { "rustfmt", lsp_format = "fallback" },
 			},

@@ -1,14 +1,12 @@
-local keymap = vim.keymap
 return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		keys = {
-			{ "<C-]>", vim.lsp.buf.definition },
-			{ "<leader>D", vim.lsp.buf.type_definition },
-			{ "<C-]>", vim.lsp.buf.definition }, -- gd
-			{ "gi", vim.lsp.buf.implementation }, -- gI
-			{ "<leader>rn", vim.lsp.buf.rename }, -- cr
+			{ "<C-]>",      vim.lsp.buf.definition },  -- gd
+			{ "gi",         vim.lsp.buf.implementation }, -- gI
+			{ "<leaGer>rn", vim.lsp.buf.rename },      -- cr
+			{ "<leader>D",  vim.lsp.buf.type_definition },
 			-- { "<leader>do", vim.diagnostic.open_float }, -- wrong cmd
 
 			-- lazyvim already included some keys https://www.lazyvim.org/keymaps#lsp
@@ -27,8 +25,6 @@ return {
 			},
 		},
 		config = function()
-			-- use format from conform.nvim
-
 			require("lspconfig").lua_ls.setup({
 				settings = { Lua = { diagnostics = { globals = { "vim" } } } }, -- ignore vim global in nvim config
 			})
@@ -97,16 +93,16 @@ return {
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
-					"gopls", -- golang
-					"jqls", -- json
-					"lua_ls", -- lua
+					"gopls",    -- golang
+					"jqls",     -- json
+					"lua_ls",   -- lua
 					"marksman", -- markdown
-					"pyright", -- python
+					"pyright",  -- python
 					"rust_analyzer", -- rust
-					"sqlls", -- sql
-					"ts_ls", -- ts
+					"sqlls",    -- sql
+					"ts_ls",    -- ts
 					"typst_lsp", -- typst
-					"yamlls", -- yaml
+					"yamlls",   -- yaml
 				},
 				automatic_installation = true,
 			})
