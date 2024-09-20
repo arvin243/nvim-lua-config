@@ -11,7 +11,6 @@ vim.g.loaded_netrwPlugin = 1
 -- apperance
 opt.termguicolors = true
 opt.signcolumn = "yes"
--- vim.cmd[[colorscheme gruvbox]]
 
 -- display
 opt.relativenumber = true
@@ -259,14 +258,11 @@ require("lazy").setup({
 				})
 			end,
 		},
-		{
-			"windwp/nvim-autopairs",
-			event = "InsertEnter",
-			opts = { disable_filetype = { "TelescopePrompt", "vim" } },
-		},
+
+		{ "windwp/nvim-autopairs",           event = "InsertEnter",                 opts = { disable_filetype = { "TelescopePrompt", "vim" } } },
 
 		-- information
-		{ "RRethy/vim-illuminate",           keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
+		{ "RRethy/vim-illuminate",           event = "VeryLazy",                    keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
 		{ "bronson/vim-trailing-whitespace", event = { "BufReadPre", "BufNewFile" } },
 		{ "kevinhwang91/nvim-bqf",           ft = "qf" },
 
@@ -279,39 +275,17 @@ require("lazy").setup({
 		},
 	},
 
-	-- {"p00f/nvim-ts-rainbow",}, -- rainbow bracket
-
 	-- diagnostics, references, etc
 	{
 		"folke/trouble.nvim",
 		cmd = "Trouble",
 		keys = {
-			{
-				"<leader>xx",
-				"<cmd>Trouble diagnostics toggle<cr>",
-				desc = "Diagnostics (Trouble)",
-			},
-			{
-				"<leader>xX",
-				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-				desc = "Buffer Diagnostics (Trouble)",
-			},
-			{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
-			{
-				"<leader>cl",
-				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-				desc = "LSP Definitions / references / ... (Trouble)",
-			},
-			{
-				"<leader>xL",
-				"<cmd>Trouble loclist toggle<cr>",
-				desc = "Location List (Trouble)",
-			},
-			{
-				"<leader>xQ",
-				"<cmd>Trouble qflist toggle<cr>",
-				desc = "Quickfix List (Trouble)",
-			},
+			{ "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>",                        desc = "Diagnostics (Trouble)", },
+			{ "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",           desc = "Buffer Diagnostics (Trouble)", },
+			{ "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>",                desc = "Symbols (Trouble)" },
+			{ "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)", },
+			{ "<leader>xL", "<cmd>Trouble loclist toggle<cr>",                            desc = "Location List (Trouble)", },
+			{ "<leader>xQ", "<cmd>Trouble qflist toggle<cr>",                             desc = "Quickfix List (Trouble)", },
 		},
 	},
 
