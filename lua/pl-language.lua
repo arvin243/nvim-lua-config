@@ -147,5 +147,5 @@ return {
     version = "0.1.*",
     build = function() require "typst-preview".update() end,
   },
-  { "jceb/vim-orgmode", ft = { "org" }, },
+  -- { "jceb/vim-orgmode", ft = { "org" }, },
 }
