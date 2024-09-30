@@ -2,6 +2,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
+		dependencies = { "williamboman/mason-lspconfig.nvim" },
 		keys = {
 			{ "<C-]>",      vim.lsp.buf.definition },  -- gd
 			{ "gi",         vim.lsp.buf.implementation }, -- gI
@@ -69,43 +70,38 @@ return {
 			})
 		end,
 	},
+
 	{
 		"williamboman/mason.nvim",
-		event = { "BufReadPre", "BufNewFile" },
+		event = "VeryLazy",
 		cmd = { "Mason", "MasonUpdate" },
 		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
-		config = function()
-			require("mason").setup({
-				ui = {
-					icons = {
-						package_installed = "✓",
-						package_pending = "➜",
-						package_uninstalled = "✗",
-					},
-				},
-			})
-		end,
+		opts = {
+			ui = {
+				icons =
+				{ package_installed = "✓", package_pending = "➜", package_uninstalled = "✗" }
+			}
+		},
 	},
+
 	{
 		"williamboman/mason-lspconfig.nvim", -- a bridge between mason.nvim and lspconfig
-		event = { "BufReadPre", "BufNewFile" },
-		dependencies = { "neovim/nvim-lspconfig" },
-		config = function()
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"gopls",    -- golang
-					"jqls",     -- json
-					"lua_ls",   -- lua
-					"marksman", -- markdown
-					"pyright",  -- python
-					"rust_analyzer", -- rust
-					"sqlls",    -- sql
-					"ts_ls",    -- ts
-					"typst_lsp", -- typst
-					"yamlls",   -- yaml
-				},
-				automatic_installation = true,
-			})
-		end,
+		event = "VeryLazy",
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			ensure_installed = {
+				"gopls",     -- golang
+				"jqls",      -- json
+				"lua_ls",    -- lua
+				"marksman",  -- markdown
+				"pyright",   -- python
+				"rust_analyzer", -- rust
+				"sqlls",     -- sql
+				"ts_ls",     -- ts
+				"typst_lsp", -- typst
+				"yamlls",    -- yaml
+			},
+			automatic_installation = true,
+		},
 	},
 }

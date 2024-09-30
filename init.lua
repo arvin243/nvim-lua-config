@@ -231,9 +231,7 @@ require("lazy").setup({
 		{ "vim-scripts/swapcol.vim", cmd = { "Swapcols" } },
 		{ "tani/dmacro.vim",         keys = { { "<c-y>", mode = { "n", "i" }, "<Plug>(dmacro-play-macro)" } } },
 
-		-- auto increment, vis & visincr
-		{ "vim-scripts/vis",         cmd = { "B", "S" } },
-		{ "vim-scripts/VisIncr",     cmd = { "I", "II" } }, -- :I, :I -1, :II, etc
+		-- increment
 		{
 			"monaqa/dial.nvim",
 			events = "VeryLazy",

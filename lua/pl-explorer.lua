@@ -2,7 +2,7 @@ return {
   {
     "nvim-tree/nvim-tree.lua",
     keys = { { "<leader>ee", "<cmd>NvimTreeToggle<cr>" } },
-    dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("nvim-tree").setup({
         auto_reload_on_write = true,
@@ -18,7 +18,7 @@ return {
   },
 
 
-  {
+  { -- edit file system in vim
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = { "Oil" },
