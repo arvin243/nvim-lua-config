@@ -10,16 +10,19 @@ return {
       ensure_installed = {
         "bash", "query",
         "c", "cpp",
+        "dockerfile",
         "json",
         "javascript", "typescript", "tsx", "css",
         "lua", "luadoc",
         "python",
-        -- "rust",
+        "rust",
         "go",
         "markdown", "markdown_inline",
         "typst",
         "vim", "vimdoc",
+        "yaml",
       },
+      auto_install = true,
 
       highlight = { enable = true, disable = {} },
       indent = { enable = true },
@@ -147,5 +150,4 @@ return {
     version = "0.1.*",
     build = function() require "typst-preview".update() end,
   },
-  -- { "jceb/vim-orgmode", ft = { "org" }, },
 }
