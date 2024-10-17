@@ -197,7 +197,15 @@ require("lazy").setup({
 		event = "VeryLazy",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
-			{ "rcarriga/nvim-notify", opts = { background_colour = "#000000" } },
+			{
+				"rcarriga/nvim-notify",
+				opts = {
+					background_colour = "#000000",
+					on_open = function(win)
+						vim.api.nvim_win_set_config(win, { focusable = false })
+					end,
+				}
+			},
 		},
 		opts = {
 			lsp = {
