@@ -3,11 +3,16 @@ return {
 	event = "InsertEnter",
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-copilot",
+		{ "zbirenbaum/copilot-cmp", config = function() require("copilot_cmp").setup() end, },
 		"hrsh7th/cmp-path", -- file path
 		"hrsh7th/cmp-buffer",
 
-		"github/copilot.vim",
+		{
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			event = "InsertEnter",
+			config = function() require("copilot").setup({}) end,
+		},
 		-- snippets
 		"L3MON4D3/LuaSnip",
 		"saadparwaiz1/cmp_luasnip",
@@ -15,6 +20,12 @@ return {
 	config = function()
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
+
+		local has_words_before = function()
+			if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+			local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+			return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+		end
 
 		cmp.setup({
 			snippet = {
@@ -40,15 +51,25 @@ return {
 					end
 				end),
 
-				["<Tab>"] = cmp.mapping(function(fallback)
-					if cmp.visible() then
-						cmp.select_next_item()
-					elseif luasnip.locally_jumpable(1) then
-						luasnip.jump(1)
+				-- ["<Tab>"] = cmp.mapping(function(fallback)
+				-- 	if cmp.visible() then
+				-- 		cmp.select_next_item()
+				-- 	elseif luasnip.locally_jumpable(1) then
+				-- 		luasnip.jump(1)
+				-- 	else
+				-- 		fallback()
+				-- 	end
+				-- end, { "i", "s" }),
+
+				-- cmp-copilot
+				["<Tab>"] = vim.schedule_wrap(function(fallback)
+					if cmp.visible() and has_words_before() then
+						cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
 					else
 						fallback()
 					end
-				end, { "i", "s" }),
+				end),
+
 				["<S-Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
 						cmp.select_prev_item()
@@ -75,10 +96,10 @@ return {
 			},
 
 			sources = cmp.config.sources({
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
 				{ name = "copilot" },
+				{ name = "nvim_lsp" },
 				{ name = "path" },
+				{ name = "luasnip" },
 			}, { { name = "buffer" } }),
 		})
 	end,
