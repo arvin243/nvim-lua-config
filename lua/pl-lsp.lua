@@ -91,14 +91,14 @@ return {
 		opts = {
 			ensure_installed = {
 				"gopls",     -- golang
-				"jqls",      -- json
+				-- "jqls",      -- json
 				"lua_ls",    -- lua
 				"marksman",  -- markdown
 				"pyright",   -- python
 				"rust_analyzer", -- rust
 				"sqlls",     -- sql
 				"ts_ls",     -- ts
-				"typst_lsp", -- typst
+				-- "typst_lsp", -- typst
 				"yamlls",    -- yaml
 			},
 			automatic_installation = true,

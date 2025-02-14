@@ -18,7 +18,6 @@ return {
         "rust",
         "go",
         "markdown", "markdown_inline",
-        "typst",
         "vim", "vimdoc",
         "yaml",
       },
