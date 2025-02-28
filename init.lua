@@ -178,7 +178,7 @@ require("lazy").setup({
 	require("pl-format"),
 	require("pl-tpope"),
 
-	require("pl-copilot"),
+	-- require("pl-copilot"),
 	require("pl-comment"),
 	require("pl-snippet"),
 	require("pl-navigation"),
