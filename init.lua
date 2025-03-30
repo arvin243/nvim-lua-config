@@ -301,5 +301,6 @@ require("lazy").setup({
 
 -- end of lazy plugins
 
+require("builtin")
 require("custom-fn")
 require("neovide")
