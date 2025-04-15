@@ -21,6 +21,7 @@ return {
         "vim", "vimdoc",
         "yaml",
       },
+      ignore_install = { "org" },
       auto_install = true,
 
       highlight = { enable = true, disable = {} },
@@ -148,5 +149,16 @@ return {
     ft = "typst",
     version = "0.1.*",
     build = function() require "typst-preview".update() end,
+  },
+  {
+    'nvim-orgmode/orgmode',
+    event = 'VeryLazy',
+    ft = { 'org' },
+    config = function()
+      require('orgmode').setup({
+        org_agenda_files = '~/note/agenda/**/*',
+        org_default_notes_file = '~/note/inbox.org',
+      })
+    end,
   },
 }
