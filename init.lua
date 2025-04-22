@@ -3,35 +3,41 @@
 --
 local opt = vim.opt
 local keymap = vim.keymap
+local cmd = vim.cmd
+local g = vim.g
 
 -- for nvim-tree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 
 -- apperance
 opt.termguicolors = true
 opt.signcolumn = "yes"
+opt.number = true
+opt.cursorline = true
+opt.textwidth = 120
 
 -- display
 opt.relativenumber = true
 opt.wrap = false
-opt.cursorline = true
 opt.hidden = true
 opt.showcmd = false
 opt.inccommand = "nosplit"
-
--- scroll
-opt.scrolloff = 4
-opt.sidescrolloff = 10
 opt.laststatus = 2
 
--- enable mouse
+-- mouse
 -- opt.mouse:append("a")
 opt.mouse = "nv"
 
 -- split window
 opt.splitright = true
 opt.splitbelow = true
+
+-- scroll
+opt.scrolloff = 4
+opt.sidescrolloff = 10
+opt.ttyfast = true
+opt.lazyredraw = false -- avoid issue in noice
 
 -- search
 opt.ignorecase = true
@@ -44,61 +50,46 @@ opt.hlsearch = true
 opt.backup = false
 opt.writebackup = false
 opt.swapfile = false
-
--- spell
-opt.spell = false
-
--- errorbell
-opt.errorbells = false
-
--- match bracket
-opt.showmatch = true
-opt.matchtime = 2
+opt.undofile = false
 
 -- editing
 opt.autoread = true -- auto read if file is modified in other place
 opt.title = true
 opt.wildmenu = true
-
--- history
+opt.errorbells = false
+opt.spell = false
 opt.history = 1000
+
+-- match bracket
+opt.showmatch = true
+opt.matchtime = 2
 
 -- fold
 opt.foldenable = true
 opt.foldmethod = "indent"
 opt.foldlevel = 99
-opt.foldenable = true
 opt.foldlevelstart = 99
 
 -- indentation
 opt.autoindent = true
+opt.smartindent = true
+opt.expandtab = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
-opt.expandtab = true
-opt.smartindent = true
-vim.cmd([[autocmd FileType lua,jsom,yaml setlocal ts=2 sts=2 sw=2]])
-vim.cmd([[autocmd FileType json set formatprg=jq]])
-vim.cmd([[autocmd BufNewFile,BufRead *.typst set filetype=typst]])
-vim.cmd([[autocmd BufNewFile,BufRead *.typ set filetype=typst]])
 
--- appearance
-opt.number = true
-opt.textwidth = 120
-
--- undo file
-opt.undofile = false
-
--- faster scroll
-opt.ttyfast = true
-opt.lazyredraw = false -- avoid issue in noice
+-- filetype spec
+cmd([[autocmd FileType lua,jsom,yaml setlocal ts=2 sts=2 sw=2]])
+cmd([[autocmd FileType json set formatprg=jq]])
+cmd([[autocmd BufNewFile,BufRead *.typst set filetype=typst]])
+cmd([[autocmd BufNewFile,BufRead *.typ set filetype=typst]])
 
 --
 -- keymaps
 --
 
-vim.g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
-vim.g.localmapleader = ","
+g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
+g.localmapleader = ","
 
 keymap.set("n", "<esc>", ":nohl<CR>")
 keymap.set("n", "Q", "<nop>")
@@ -108,7 +99,10 @@ keymap.set("n", "<c-q>", "<nop>")
 keymap.set("n", "[b", ":bprevious<CR>")
 keymap.set("n", "]b", ":bnext<CR>")
 
+-- clipboard
 keymap.set("v", "Y", '"+y')
+
+-- filetype
 -- keymap.set("n", "<leader>ft", ":set ft=")
 
 -- command mode and insert mode emacs-style {
@@ -158,11 +152,8 @@ keymap.set("n", "<leader>rt", ":call RunVimTest()<cr>")
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
+		"git", "clone", "--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git", "--branch=stable",
 		lazypath,
 	})
 end
