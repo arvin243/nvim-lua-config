@@ -26,14 +26,19 @@ return {
 			},
 		},
 		config = function()
-			require("lspconfig").lua_ls.setup({
-				settings = { Lua = { diagnostics = { globals = { "vim" } } } }, -- ignore vim global in nvim config
+			vim.lsp.config('lua_ls', {
+				settings = {
+					Lua = {
+						runtime = { version = 'LuaJIT', },
+						diagnostics = { globals = { "vim" } },
+					}
+				}, -- ignore vim global in nvim config
 			})
-			require("lspconfig").marksman.setup({})
-			require("lspconfig").pyright.setup({})
-			require("lspconfig").rust_analyzer.setup({})
+			vim.lsp.config('marksman', {})
+			vim.lsp.config('pyright', {})
+			vim.lsp.config('rust_analyzer', {})
 
-			require("lspconfig").gopls.setup({
+			vim.lsp.config('gopls', {
 				cmd = { "gopls" },
 				fieltypes = { "go", "gomod", "gowork", "gotmpl" },
 				root_dir = require("lspconfig/util").root_pattern("go.work", "go.mod", ".git"),
@@ -61,6 +66,7 @@ return {
 					},
 				},
 			})
+
 			-- gofumpt on save
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				pattern = "*.go",
