@@ -144,6 +144,7 @@ keymap.set("n", "t-", ":tabmove -<cr>")
 -- run vim run
 keymap.set("n", "<leader>rr", ":call RunVimRun()<cr>")
 keymap.set("n", "<leader>rt", ":call RunVimTest()<cr>")
+keymap.set("n", "<leader>py", ":call RunPython()<cr>")
 
 --
 -- lazy plugins

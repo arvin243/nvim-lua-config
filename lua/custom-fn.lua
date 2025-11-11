@@ -57,3 +57,27 @@ func! RunVimTest()
   endif
 endfunc
 ]], true)
+
+function RunPython()
+  -- Get current buffer lines
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local tmpfile = vim.fn.tempname() .. ".py"
+
+  -- Write to temp file
+  vim.fn.writefile(lines, tmpfile)
+
+  -- Run Python (capture both stdout and stderr)
+  local output = vim.fn.systemlist("python3 " .. vim.fn.shellescape(tmpfile) .. " 2>&1")
+
+  -- Set quickfix list
+  vim.fn.setqflist({}, ' ', { title = 'Python Output', lines = output })
+
+  -- Open quickfix if output exists
+  if #output > 0 then
+    vim.cmd("copen")
+  else
+    print("No output.")
+  end
+end
+
+vim.api.nvim_create_user_command('RunPython', RunPython, {})
