@@ -26,17 +26,25 @@ return {
 
       highlight = { enable = true, disable = {} },
       indent = { enable = true },
-      -- incremental_selection = {}
-
       rainbow = {
         enable = true,
         extended_mode = true,
         max_file_lines = nil,
       },
-
     },
     config = function()
       require('nvim-treesitter.install').compilers = { 'gcc' }
+      require 'nvim-treesitter.configs'.setup {
+        incremental_selection = {
+          enable = true,
+          keymaps = {
+            init_selection = "gnn", -- set to `false` to disable one of the mappings
+            node_incremental = "gnn",
+            scope_incremental = "grc",
+            node_decremental = "gnr",
+          },
+        },
+      }
     end,
   },
   { -- golang
