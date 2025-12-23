@@ -6,10 +6,6 @@ local keymap = vim.keymap
 local cmd = vim.cmd
 local g = vim.g
 
--- for nvim-tree
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
-
 -- apperance
 opt.termguicolors = true
 opt.signcolumn = "yes"
