@@ -4,11 +4,12 @@ return {
     "echasnovski/mini.nvim",
     event = "VeryLazy",
     config = function()
-      -- Comments
+      -- Comment
       require('mini.comment').setup({
         mappings = {
           comment = 'gc',
           comment_line = '<leader>cc',
+          comment_visual = '<leader>cc',
           textobject = 'gc',
         },
       })

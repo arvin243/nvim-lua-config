@@ -1,25 +1,18 @@
 return {
-  -- Remove or comment out nvim-tree section
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   ...
-  -- },
-
   {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    -- Keep same keybinding as nvim-tree
     keys = {
-      { "<leader>ee", "<cmd>Oil<cr>", desc = "Open parent directory" },
+      {
+        "<leader>ee",
+        function() vim.cmd((vim.bo.filetype == "oil") and "bd" or "Oil") end,
+        mode = "n",
+        desc = "Toggle Oil",
+      },
     },
     opts = {
       default_file_explorer = true,
-      columns = {
-        "icon",
-        -- "permissions",
-        -- "size",
-        -- "mtime",
-      },
+      columns = { "icon" },
       buf_options = {
         buflisted = false,
         bufhidden = "hide",
@@ -65,12 +58,8 @@ return {
       use_default_keymaps = true,
       view_options = {
         show_hidden = false,
-        is_hidden_file = function(name, bufnr)
-          return vim.startswith(name, ".")
-        end,
-        is_always_hidden = function(name, bufnr)
-          return false
-        end,
+        is_hidden_file = function(name, bufnr) return vim.startswith(name, ".") end,
+        is_always_hidden = function(name, bufnr) return false end,
         sort = {
           { "type", "asc" },
           { "name", "asc" },
@@ -81,12 +70,8 @@ return {
         max_width = 0,
         max_height = 0,
         border = "rounded",
-        win_options = {
-          winblend = 0,
-        },
-        override = function(conf)
-          return conf
-        end,
+        win_options = { winblend = 0, },
+        override = function(conf) return conf end,
       },
       preview = {
         max_width = 0.9,
@@ -109,9 +94,7 @@ return {
         height = nil,
         border = "rounded",
         minimized_border = "none",
-        win_options = {
-          winblend = 0,
-        },
+        win_options = { winblend = 0, },
       },
     },
   },

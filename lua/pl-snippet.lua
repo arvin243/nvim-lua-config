@@ -10,14 +10,14 @@ return {
     },
     config = function()
       -- Add custom snippets
-      vim.snippet.expand([[
-        snippet dt
-          `date +%Y-%m-%d`
-        snippet ts10
-          `date +%s`
-        snippet ts13
-          `date +%s%3N`
-      ]])
+      -- vim.snippet.expand([[
+      --   snippet dt
+      --     `date +%Y-%m-%d`
+      --   snippet ts10
+      --     `date +%s`
+      --   snippet ts13
+      --     `date +%s%3N`
+      -- ]])
     end,
   },
 }
