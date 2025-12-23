@@ -158,6 +158,8 @@ opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 
+	require("pl-mini"),
+
 	require("pl-completion"),
 	require("pl-telescope"),
 	require("pl-lsp"),
@@ -167,7 +169,6 @@ require("lazy").setup({
 	require("pl-tpope"),
 
 	-- require("pl-copilot"),
-	require("pl-comment"),
 	require("pl-snippet"),
 	require("pl-navigation"),
 	require("pl-ornament"),
@@ -253,7 +254,7 @@ require("lazy").setup({
 			end,
 		},
 
-		{ "windwp/nvim-autopairs",           event = "InsertEnter",                 opts = { disable_filetype = { "TelescopePrompt", "vim" } } },
+		-- { "windwp/nvim-autopairs",           event = "InsertEnter",                 opts = { disable_filetype = { "TelescopePrompt", "vim" } } },
 
 		-- information
 		{ "RRethy/vim-illuminate",           event = "VeryLazy",                    keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
