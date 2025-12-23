@@ -6,7 +6,7 @@ return {
 		keys = {
 			{ "<C-]>",      vim.lsp.buf.definition },  -- gd
 			{ "gi",         vim.lsp.buf.implementation }, -- gI
-			{ "<leaGer>rn", vim.lsp.buf.rename },      -- cr
+			{ "<leader>rn", vim.lsp.buf.rename },      -- cr
 			{ "<leader>D",  vim.lsp.buf.type_definition },
 			-- { "<leader>do", vim.diagnostic.open_float }, -- wrong cmd
 

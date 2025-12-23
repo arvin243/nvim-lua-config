@@ -4,21 +4,19 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     {
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        config = function()
-          require("telescope").load_extension("fzf")
-        end,
-      },
-      {
-        "nvim-tree/nvim-web-devicons",
-        dependencies = { "junegunn/fzf.vim" },
-        build = "make",
-        config = function()
-          require("telescope").load_extension("fzf")
-        end
-      },
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end,
+    },
+    {
+      "nvim-tree/nvim-web-devicons",
+      dependencies = { "junegunn/fzf.vim" },
+      build = "make",
+      config = function()
+        require("telescope").load_extension("fzf")
+      end
     },
   },
   cmd = "Telescope",
@@ -53,9 +51,11 @@ return {
           "--with-filename",
           "--line-number",
           "--column",
-          "--fixed-strings",
+          -- "--fixed-strings", -- remove for regexp
           "--smart-case",
+          "--hidden",         -- search hidden files
           "--trim",
+          "--glob", "!.git/", -- exclude .git
         },
         layout_config = {
           width = 0.8,

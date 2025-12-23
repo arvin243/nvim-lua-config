@@ -79,7 +79,7 @@ opt.shiftwidth = 4
 opt.softtabstop = 4
 
 -- filetype spec
-cmd([[autocmd FileType lua,jsom,yaml setlocal ts=2 sts=2 sw=2]])
+cmd([[autocmd FileType lua,json,yaml setlocal ts=2 sts=2 sw=2]])
 cmd([[autocmd FileType json set formatprg=jq]])
 cmd([[autocmd BufNewFile,BufRead *.typst set filetype=typst]])
 cmd([[autocmd BufNewFile,BufRead *.typ set filetype=typst]])
@@ -121,7 +121,7 @@ keymap.set("i", "<c-f>", "<right>")
 keymap.set("i", "<c-a>", "<home>")
 keymap.set("i", "<c-e>", "<end>")
 keymap.set("i", "<c-d>", "<del>")
-keymap.set("i", "<c-k>", "<esc>lC")
+keymap.set("i", "<c-k>", "<esc>lC") -- conflict with copilot?
 keymap.set("i", "jk", "<esc>")
 
 -- faster scroll
