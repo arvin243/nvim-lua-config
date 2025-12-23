@@ -1,16 +1,23 @@
 return {
-  "L3MON4D3/LuaSnip",
-  event = "InsertEnter",
-  version = "v2.*",
-  config = function()
-    local ls = require("luasnip")
-    local lssnip = ls.snippet
-    local lsfunc = ls.function_node
-
-    ls.add_snippets("all", {
-      lssnip("dt", lsfunc(function() return os.date("%Y-%m-%d") end, {})),
-      lssnip("ts10", lsfunc(function() return tostring(os.time()) end, {})),
-      lssnip("ts13", lsfunc(function() return tostring(os.time() * 1000) end, {})),
-    })
-  end
+  {
+    "garymjr/nvim-snippets",
+    event = "InsertEnter",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
+    opts = {
+      friendly_snippets = true,
+    },
+    config = function()
+      -- Add custom snippets
+      vim.snippet.expand([[
+        snippet dt
+          `date +%Y-%m-%d`
+        snippet ts10
+          `date +%s`
+        snippet ts13
+          `date +%s%3N`
+      ]])
+    end,
+  },
 }
