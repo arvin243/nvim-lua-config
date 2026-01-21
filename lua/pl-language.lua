@@ -4,7 +4,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     event = { "BufReadPre", "BufNewFile" },
     priority = 1000,
-    build = ":TSUpdate",
+    build = "<cmd>TSUpdate",
     opts = {
       -- add languages
       ensure_installed = {

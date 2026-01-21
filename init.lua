@@ -87,19 +87,19 @@ cmd([[autocmd BufNewFile,BufRead *.typ set filetype=typst]])
 g.mapleader = "," -- Make sure to set `mapleader` before lazy so your mappings are correct
 g.localmapleader = ","
 
-keymap.set("n", "<esc>", ":nohl<CR>")
+keymap.set("n", "<esc>", "<cmd>nohl<CR>")
 keymap.set("n", "Q", "<nop>")
 keymap.set("n", "<c-q>", "<nop>")
 
 -- buffer
-keymap.set("n", "[b", ":bprevious<CR>")
-keymap.set("n", "]b", ":bnext<CR>")
+keymap.set("n", "[b", "<cmd>bprevious<CR>")
+keymap.set("n", "]b", "<cmd>bnext<CR>")
 
 -- clipboard
 keymap.set("v", "Y", '"+y')
 
 -- filetype
--- keymap.set("n", "<leader>ft", ":set ft=")
+-- keymap.set("n", "<leader>ft", "<cmd>set ft=")
 
 -- command mode and insert mode emacs-style {
 keymap.set("c", "<c-b>", "<left>")
@@ -124,23 +124,23 @@ keymap.set("i", "jk", "<esc>")
 keymap.set("n", "<c-e>", "2<c-e>")
 keymap.set("n", "<c-y>", "2<c-y>")
 
-keymap.set("n", "<leader>wr", ":set wrap<cr>")
+keymap.set("n", "<leader>wr", "<cmd>set wrap<cr>")
 -- " customize placeholder _TODO_
 -- " nnoremap <leader><c-t> a_TODO_<esc>
--- nnoremap <leader><c-t> b/_TODO_<cr>:nohl<cr>"_c6l
--- nnoremap <leader>tt b/_TODO_<cr>:nohl<cr>"_c6l
--- inoremap <c-t> <esc>/_TODO_<cr>:nohl<cr>"_c6l
+-- nnoremap <leader><c-t> b/_TODO_<cr><cmd>nohl<cr>"_c6l
+-- nnoremap <leader>tt b/_TODO_<cr><cmd>nohl<cr>"_c6l
+-- inoremap <c-t> <esc>/_TODO_<cr><cmd>nohl<cr>"_c6l
 
 -- tab
-keymap.set("n", "tu", ":tabe<cr>")
-keymap.set("n", "tn", ":tabnew<cr>")
-keymap.set("n", "t=", ":tabmove +<cr>")
-keymap.set("n", "t-", ":tabmove -<cr>")
+keymap.set("n", "tu", "<cmd>tabe<cr>")
+keymap.set("n", "tn", "<cmd>tabnew<cr>")
+keymap.set("n", "t=", "<cmd>tabmove +<cr>")
+keymap.set("n", "t-", "<cmd>tabmove -<cr>")
 
 -- run vim run
-keymap.set("n", "<leader>rr", ":call RunVimRun()<cr>")
-keymap.set("n", "<leader>rt", ":call RunVimTest()<cr>")
-keymap.set("n", "<leader>py", ":call RunPython()<cr>")
+keymap.set("n", "<leader>rr", "<cmd>call RunVimRun()<cr>")
+keymap.set("n", "<leader>rt", "<cmd>call RunVimTest()<cr>")
+keymap.set("n", "<leader>py", "<cmd>call RunPython()<cr>")
 
 --
 -- lazy plugins

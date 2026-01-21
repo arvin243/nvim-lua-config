@@ -81,7 +81,7 @@ return {
 		"williamboman/mason.nvim",
 		event = "VeryLazy",
 		cmd = { "Mason", "MasonUpdate" },
-		build = ":MasonUpdate", -- :MasonUpdate updates registry contents
+		build = "<cmd>MasonUpdate", -- :MasonUpdate updates registry contents
 		opts = {
 			ui = {
 				icons =
