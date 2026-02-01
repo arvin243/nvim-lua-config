@@ -117,7 +117,7 @@ keymap.set("i", "<c-f>", "<right>")
 keymap.set("i", "<c-a>", "<home>")
 keymap.set("i", "<c-e>", "<end>")
 keymap.set("i", "<c-d>", "<del>")
-keymap.set("i", "<c-k>", "<esc>lC") -- conflict with copilot?
+keymap.set("i", "<c-k>", "<esc>lC")
 keymap.set("i", "jk", "<esc>")
 
 -- faster scroll
@@ -168,7 +168,6 @@ require("lazy").setup({
 	require("pl-format"),
 	require("pl-tpope"),
 
-	-- require("pl-copilot"),
 	require("pl-snippet"),
 	require("pl-navigation"),
 	require("pl-ornament"),

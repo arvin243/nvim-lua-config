@@ -5,20 +5,6 @@ return {
 		version = 'v0.*',
 		dependencies = {
 			'rafamadriz/friendly-snippets',
-			{
-				"giuxtaposition/blink-cmp-copilot",
-				dependencies = {
-					{
-						"zbirenbaum/copilot.lua",
-						cmd = "Copilot",
-						event = "InsertEnter",
-						opts = {
-							suggestion = { enabled = false },
-							panel = { enabled = false },
-						},
-					},
-				},
-			},
 		},
 		opts = {
 			keymap = {
@@ -39,15 +25,7 @@ return {
 			},
 
 			sources = {
-				default = { 'lsp', 'path', 'copilot', 'buffer', 'snippets' },
-				providers = {
-					copilot = {
-						name = "copilot",
-						module = "blink-cmp-copilot",
-						score_offset = 100,
-						async = true,
-					},
-				},
+				default = { 'lsp', 'path', 'buffer', 'snippets' },
 			},
 
 			completion = {
