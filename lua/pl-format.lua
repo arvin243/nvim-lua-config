@@ -1,11 +1,15 @@
 return {
-	-- { "nvie/vim-rst-tables",        event = {"BufReadPre", "BufNewFile"} },
 	{
 		"dhruvasagar/vim-table-mode",
 		cmd = { "TableModeToggle" },
 		keys = { { "<leader>tm", "<cmd>TableModeToggle<cr>" } },
 	},
-	{ "godlygeek/tabular", cmd = { "Tabularize" } },
+	{
+		"sustech-data/wildfire.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		opts = {},
+	},
 	{
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
@@ -33,17 +37,5 @@ return {
 		init = function()
 			vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 		end,
-	},
-
-	-- splitjoin
-	{
-		"Wansmer/treesj",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		keys = { { "gS", "<cmd>TSJToggle<cr>" } },
-		opts = {
-			use_default_keymaps = false,
-			max_join_length = 240,
-			dot_repeat = true,
-		},
 	},
 }

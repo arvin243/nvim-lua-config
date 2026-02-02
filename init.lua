@@ -168,17 +168,9 @@ require("lazy").setup({
 	require("pl-format"),
 	require("pl-tpope"),
 
-	require("pl-snippet"),
 	require("pl-navigation"),
 	require("pl-ornament"),
 
-	-- keybinding & command
-	{
-		"folke/which-key.nvim",
-		opts = { preset = "mordern" },
-		-- stylua: ignore
-		keys = { { "<leader>?", function() require("which-key").show({ global = false }) end } },
-	},
 	-- wilder
 	{
 		"folke/noice.nvim",
@@ -256,17 +248,7 @@ require("lazy").setup({
 		-- { "windwp/nvim-autopairs",           event = "InsertEnter",                 opts = { disable_filetype = { "TelescopePrompt", "vim" } } },
 
 		-- information
-		{ "RRethy/vim-illuminate",           event = "VeryLazy",                    keys = { { "<leader>ll", "<cmd>IlluminateToggle<cr>" } } },
-		{ "bronson/vim-trailing-whitespace", event = { "BufReadPre", "BufNewFile" } },
 		{ "kevinhwang91/nvim-bqf",           ft = "qf" },
-
-		-- selection
-		{
-			"sustech-data/wildfire.nvim",
-			event = { "BufReadPre", "BufNewFile" },
-			dependencies = { "nvim-treesitter/nvim-treesitter" },
-			opts = {},
-		},
 	},
 
 	-- diagnostics, references, etc
