@@ -26,22 +26,39 @@ return {
 			},
 		},
 		config = function()
-			vim.lsp.config('lua_ls', {
+			-- Ensure blink.cmp capabilities are used
+			local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+			-- Helper to set up and enable a server
+			local function setup_server(name, config)
+				config = config or {}
+				config.capabilities = vim.tbl_deep_extend("force", capabilities, config.capabilities or {})
+				vim.lsp.config(name, config)
+				vim.lsp.enable(name)
+			end
+
+			-- Lua
+			setup_server('lua_ls', {
 				settings = {
 					Lua = {
-						runtime = { version = 'LuaJIT', },
+						runtime = { version = 'LuaJIT' },
 						diagnostics = { globals = { "vim" } },
 					}
-				}, -- ignore vim global in nvim config
+				},
 			})
-			vim.lsp.config('marksman', {})
-			vim.lsp.config('pyright', {})
-			vim.lsp.config('rust_analyzer', {})
 
-			vim.lsp.config('gopls', {
+			-- Standard servers
+			setup_server('marksman')
+			setup_server('pyright')
+			setup_server('rust_analyzer')
+
+			-- Go
+			setup_server('gopls', {
 				cmd = { "gopls" },
-				fieltypes = { "go", "gomod", "gowork", "gotmpl" },
-				root_dir = require("lspconfig/util").root_pattern("go.work", "go.mod", ".git"),
+				filetypes = { "go", "gomod", "gowork", "gotmpl" },
+				root_dir = function(fname)
+					return require("lspconfig.util").root_pattern("go.work", "go.mod", ".git")(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+				end,
 				settings = {
 					gopls = {
 						hints = {
@@ -67,7 +84,7 @@ return {
 				},
 			})
 
-			-- gofumpt on save
+			-- Auto-format on save for Go
 			vim.api.nvim_create_autocmd("BufWritePre", {
 				pattern = "*.go",
 				callback = function()

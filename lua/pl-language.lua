@@ -66,7 +66,7 @@ return {
         fillstruct = "gopls",
         -- max_line_len = 256,
 
-        lsp_cfg = true,
+        lsp_cfg = false, -- Disable internal LSP setup, handled by pl-lsp.lua
         -- lsp_on_attach = lsp.on_attach,
         lsp_gofumpt = true,
         lsp_codelens = true,
@@ -87,16 +87,6 @@ return {
         },
 
         -- luasnip = true,
-      })
-
-      -- snippet
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-      require("go").setup({
-        -- other setups ....
-        lsp_cfg = {
-          capabilities = capabilities,
-          -- other setups
-        },
       })
 
       -- -- use format from lsp
@@ -154,7 +144,7 @@ return {
         showImplicitArguments = true,
         excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
       }
-      metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+      metals_config.capabilities = require("blink.cmp").get_lsp_capabilities()
     end
   },
   {
